@@ -4,11 +4,11 @@ import { BotMessageSquare, Twitter, Linkedin, Instagram } from 'lucide-react';
 
 export default function Footer() {
   const footerLinks = [
-    { name: 'About', href: '#' },
+    { name: 'About', href: '/about' },
     { name: 'Tools', href: '/#tools' },
     { name: 'Blog', href: '/blog' },
-    { name: 'Privacy Policy', href: '#' },
-    { name: 'Contact Us', href: '#' },
+    { name: 'Privacy Policy', href: '/privacy' },
+    { name: 'Contact Us', href: '/contact' },
   ];
 
   const socialLinks = [

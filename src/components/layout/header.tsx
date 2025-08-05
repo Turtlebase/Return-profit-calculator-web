@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from "react";
@@ -11,7 +12,7 @@ export default function Header() {
 
   const navLinks = [
     { name: "Tools", href: "/#tools" },
-    { name: "Use Cases", href: "/#use-cases" },
+    { name: "About", href: "/about" },
     { name: "Blog", href: "/blog" },
   ];
 
@@ -49,7 +50,7 @@ export default function Header() {
               </Button>
             </SheetTrigger>
             <SheetContent side="right" className="w-[240px] p-0">
-              <SheetTitle className="sr-only">Mobile Menu</SheetTitle>
+               <SheetTitle className="sr-only">Mobile Menu</SheetTitle>
               <div className="flex flex-col h-full">
                 <div className="flex items-center justify-between p-4 border-b">
                    <Link href="/" className="flex items-center gap-2" onClick={() => setIsOpen(false)}>
