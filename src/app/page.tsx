@@ -3,7 +3,6 @@ import Footer from '@/components/layout/footer';
 import Hero from '@/components/landing/hero';
 import ToolsShowcase from '@/components/landing/tools-showcase';
 import ExplainerSection from '@/components/landing/explainer-section';
-import PremiumFeatures from '@/components/landing/premium-features';
 import BlogSection from '@/components/landing/blog-section';
 import NewsletterSignup from '@/components/landing/newsletter-signup';
 
@@ -15,7 +14,6 @@ export default function Home() {
         <Hero />
         <ToolsShowcase />
         <ExplainerSection />
-        <PremiumFeatures />
         <BlogSection />
         <NewsletterSignup />
       </main>

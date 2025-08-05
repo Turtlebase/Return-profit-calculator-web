@@ -66,22 +66,19 @@ const tools = [
 const ToolCard = ({ icon: Icon, title, description, component }: (typeof tools)[0]) => (
   <Dialog>
     <DialogTrigger asChild>
-      <Card className="group cursor-pointer transition-all duration-300 hover:shadow-primary/20 hover:shadow-2xl hover:-translate-y-2 bg-card/50 backdrop-blur-sm border-white/10">
-        <CardHeader className="flex flex-row items-start gap-4 space-y-0">
-          <div className="bg-primary/10 p-3 rounded-lg shrink-0">
-            <Icon className="w-6 h-6 text-primary" />
-          </div>
-          <div>
-            <CardTitle className="text-lg">{title}</CardTitle>
-            <CardDescription className="mt-1">{description}</CardDescription>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <Button variant="link" className="p-0 h-auto text-primary hover:text-primary">
-            Open Tool &rarr;
-          </Button>
-        </CardContent>
-      </Card>
+      <div className="group relative cursor-pointer rounded-xl p-px transition-all duration-300 bg-background hover:bg-primary/5">
+         <div className="relative h-full rounded-[11px] bg-background p-6">
+            <div className="mb-4">
+               <div className="p-3 rounded-lg bg-primary/10 w-fit">
+                  <Icon className="w-6 h-6 text-primary" />
+               </div>
+            </div>
+            <h3 className="text-lg font-semibold mb-1">{title}</h3>
+            <p className="text-muted-foreground text-sm mb-4">{description}</p>
+            <Button variant="link" className="p-0 h-auto text-primary">Open Tool &rarr;</Button>
+         </div>
+         <div className="absolute inset-0 rounded-xl p-px opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-gradient-to-br from-primary to-accent" aria-hidden="true"></div>
+      </div>
     </DialogTrigger>
     <DialogContent className="sm:max-w-[600px] bg-background">
       <DialogHeader>
