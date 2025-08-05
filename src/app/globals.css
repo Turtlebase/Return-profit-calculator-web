@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    --background: 0 0% 98%;
+    --background: 270 21% 97%;
     --foreground: 240 10% 3.9%;
     --card: 0 0% 100%;
     --card-foreground: 240 10% 3.9%;
@@ -32,9 +32,9 @@
   }
  
   .dark {
-    --background: 240 10% 3.9%;
+    --background: 265 20% 12%;
     --foreground: 0 0% 98%;
-    --card: 240 10% 3.9%;
+    --card: 265 20% 15%;
     --card-foreground: 0 0% 98%;
     --popover: 240 10% 3.9%;
     --popover-foreground: 0 0% 98%;
@@ -48,7 +48,7 @@
     --accent-foreground: 183 100% 20%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 240 3.7% 15.9%;
+    --border: 240 3.7% 20%;
     --input: 240 3.7% 15.9%;
     --ring: 271 76% 65%;
     --chart-1: 220 70% 50%;
@@ -65,5 +65,35 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  .prose {
+    @apply text-foreground/80 max-w-none;
+  }
+  .prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
+    @apply text-foreground;
+  }
+  .prose strong {
+    @apply text-foreground/90;
+  }
+  .prose blockquote {
+    @apply border-l-4 border-primary bg-primary/10 p-4 my-6 rounded-r-lg;
+  }
+  .prose blockquote p {
+    @apply text-primary-foreground/80 not-italic;
+  }
+  .prose code {
+    @apply bg-muted text-muted-foreground rounded-md px-1.5 py-1 text-sm;
+  }
+  .prose pre {
+    @apply bg-card border shadow-md;
+  }
+  .prose ol > li::before {
+    @apply text-foreground/70;
+  }
+  .prose ul > li::before {
+    @apply bg-primary/50;
   }
 }

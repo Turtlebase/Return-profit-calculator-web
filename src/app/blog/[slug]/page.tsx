@@ -6,6 +6,7 @@ import Footer from '@/components/layout/footer';
 import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
 import { RtoReductionChart } from '@/components/blog/rto-reduction-chart';
+import { Flowchart } from '@/components/blog/flowchart';
 
 export function generateStaticParams() {
   return blogPosts.map((post) => ({
@@ -20,19 +21,43 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
     notFound();
   }
 
+  const rtoFlowchartData = {
+    nodes: [
+      { id: '1', label: 'New COD Order Received', type: 'input' },
+      { id: '2', label: 'Analyze Customer History & Pincode' },
+      { id: '3', label: 'Previous RTO or High-Risk Pincode?' },
+      { id: '4', label: 'Green-Tagged: Low Risk' },
+      { id: '5', label: 'Yellow-Tagged: Medium Risk' },
+      { id: '6', label: 'Red-Tagged: High Risk' },
+      { id: '7', label: 'Auto-Approve COD' , type: 'output'},
+      { id: '8', label: 'COD Limit < ₹1500 or Nudge to Prepaid', type: 'output' },
+      { id: '9', label: 'Disable COD, Allow Only Prepaid', type: 'output' },
+    ],
+    edges: [
+      { from: '1', to: '2' },
+      { from: '2', to: '3', label: 'Check Criteria' },
+      { from: '3', to: '4', label: 'No (Loyal Customer)' },
+      { from: '3', to: '5', label: 'Maybe (New / Mixed History)' },
+      { from: '3', to: '6', label: 'Yes (Has RTO History)' },
+      { from: '4', to: '7' },
+      { from: '5', to: '8' },
+      { from: '6', to: '9' },
+    ],
+  };
+
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <Header />
       <main className="flex-1">
         <article className="container max-w-4xl py-12 md:py-24">
-          <header className="mb-8">
+          <header className="mb-8 text-center">
             <Badge variant="secondary" className="mb-4">
               {post.category}
             </Badge>
             <h1 className="text-3xl md:text-5xl font-bold tracking-tight leading-tight">
               {post.title}
             </h1>
-            <p className="mt-4 text-lg text-muted-foreground">
+            <p className="mt-4 text-lg text-muted-foreground max-w-3xl mx-auto">
               {post.description}
             </p>
           </header>
@@ -42,34 +67,50 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
             alt={post.title}
             width={1200}
             height={600}
-            className="w-full rounded-lg object-cover mb-12 border"
+            className="w-full rounded-lg object-cover mb-12 border shadow-lg"
             data-ai-hint={post.dataAiHint}
           />
           
           <div className="prose prose-lg dark:prose-invert max-w-none mx-auto">
              {post.slug === 'how-to-reduce-rto-by-42-using-customer-tagging' && (
                 <>
-                <p>Return to Origin (RTO) is a silent killer for many Indian D2C brands. It eats into your profits, ties up your inventory, and creates logistical nightmares. While a certain percentage of RTO is unavoidable, many brands unknowingly encourage it through their own policies and lack of customer understanding. But what if you could slash your RTO rate by nearly half with a simple, data-driven strategy? </p>
-
-                <p>This isn't a theoretical exercise. We implemented a customer tagging system for a fashion brand struggling with a 35% RTO rate on their Cash on Delivery (COD) orders. Within one quarter, we brought it down to under 20%. Here’s exactly how we did it.</p>
+                <h3>The Silent Profit Killer</h3>
+                <p>Return to Origin (RTO) is one of the most significant challenges for D2C brands in India. It's not just a returned package; it's a cascade of losses: double shipping costs, blocked inventory, operational overhead, and potential damage to the product. While you can't eliminate RTO completely, you can build a powerful system to minimize it.</p>
+                <blockquote>
+                    <p>We implemented a customer tagging system for a fashion brand struggling with a 35% RTO rate on Cash on Delivery (COD) orders. <strong>Within one quarter, we brought it down to under 20%.</strong> Here’s exactly how we did it.</p>
+                </blockquote>
                 
-                <h3>The Problem: Treating All COD Customers the Same</h3>
-                <p>The root cause of high RTO is often a one-size-fits-all approach to COD. A first-time customer from a high-risk pincode is not the same as a loyal customer with a dozen successful deliveries. By treating them identically, you are exposing yourself to unnecessary risk. The key is to segment customers based on their past behavior and location data.</p>
+                <h3>The Flaw in a One-Size-Fits-All Approach</h3>
+                <p>The core problem most brands face is treating all COD customers as equals. A first-time buyer from a remote town with a history of high returns is fundamentally different from a loyal customer in a metro city who has made ten successful purchases. By offering COD to everyone without distinction, you're exposing your business to unnecessary and avoidable risk.</p>
+                <p>The solution is to move from a reactive to a proactive model. Instead of just shipping and hoping for the best, you need to segment your customers based on data you already have. This is where a customer tagging system comes in.</p>
                 
-                <h3>The Solution: A 3-Tier Customer Tagging System</h3>
-                <p>We created a simple tagging system directly in their Shopify backend. This doesn't require complex software, just a disciplined process.</p>
+                <h3>The 3-Tier Customer Tagging Framework</h3>
+                <p>We developed a simple yet effective 3-tier tagging system that can be implemented directly within your e-commerce platform (like Shopify or WooCommerce) with minimal technical effort. The system categorizes customers into three risk levels:</p>
                 
                 <ol>
-                    <li><strong>Green-Tagged (Low Risk):</strong> These are your VIPs. Customers with a history of 3+ successful prepaid or COD deliveries. They get COD access automatically, no questions asked.</li>
-                    <li><strong>Yellow-Tagged (Medium Risk):</strong> First-time customers or those with a mixed history (e.g., one successful delivery, one return). For them, we implemented a rule: COD is only available for orders under ₹1,500. For higher value orders, our customer support would call to confirm, or they would be gently nudged towards prepaid options with a small incentive (like a 5% discount).</li>
-                    <li><strong>Red-Tagged (High Risk):</strong> Customers with a previous RTO or those from pincodes with an RTO rate above 40% (you can get this data from your shipping aggregator). These customers are only shown prepaid options at checkout. COD is disabled for them entirely.</li>
+                    <li><strong>Green-Tagged (Low Risk):</strong> These are your most reliable customers. They typically have a history of successful deliveries (prepaid or COD) and are located in areas with low RTO rates. For them, COD is enabled without any restrictions.</li>
+                    <li><strong>Yellow-Tagged (Medium Risk):</strong> This category includes first-time customers, buyers from Tier-2 or Tier-3 cities, or those with a mixed order history (e.g., one return). Here, you can implement a controlled COD policy, such as setting a maximum order value (e.g., ₹1,500) or nudging them towards prepaid options with a small incentive.</li>
+                    <li><strong>Red-Tagged (High Risk):</strong> This group includes customers with a history of RTOs or those located in pincodes notorious for high return rates. For these customers, COD should be disabled entirely, leaving only prepaid options available at checkout.</li>
                 </ol>
 
+                <p>This tiered approach is visualized in the flowchart below, showing the decision-making process for each new COD order.</p>
+
+                <Flowchart title="COD Order Processing Flowchart" data={rtoFlowchartData} />
+
+                <h3>From Theory to Practice: Execution is Key</h3>
+                <p>Implementing this system requires a disciplined operational process:</p>
+                <ul>
+                  <li><strong>Data Analysis:</strong> Regularly analyze your shipping data to identify high-risk pincodes. Your shipping aggregator dashboard is a goldmine for this information.</li>
+                  <li><strong>Team Workflow:</strong> Your fulfillment or customer service team should have a daily SOP to review new customers and update tags based on their delivery history.</li>
+                  <li><strong>Platform Integration:</strong> Add simple logic to your checkout page to dynamically show or hide payment options based on the customer's tag.</li>
+                </ul>
+
+                <h3>The Impact: A Clear Win</h3>
+                <p>The results of this strategy are twofold. First, you see a direct and significant reduction in your RTO percentage, as shown in the chart below. Second, it improves your cash flow by encouraging more prepaid orders and reducing losses from failed deliveries.</p>
+                
                 <RtoReductionChart />
 
-                <h4>Executing the Strategy</h4>
-                <p>The execution involved two parts. First, a daily routine by the fulfillment team to tag new customers and update existing ones based on delivery reports. Second, a few lines of code were added to the checkout page to show/hide payment options based on customer tags. The result was a dramatic decrease in impulse orders that were likely to be rejected at the doorstep.</p>
-                <p>By implementing this tiered system, you shift from a reactive "hope for the best" strategy to a proactive, data-informed approach. You reward your best customers and protect your business from the riskiest ones, turning a major liability into a competitive advantage.</p>
+                <p>By implementing a data-driven tagging system, you empower your business to make smarter, more profitable decisions. You reward your best customers with convenience while protecting your bottom line from high-risk orders, turning a major operational headache into a sustainable competitive advantage.</p>
                 </>
              )}
 
