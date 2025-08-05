@@ -5,37 +5,13 @@ import Header from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
 import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
-import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis, Tooltip } from 'recharts';
+import { RtoReductionChart } from '@/components/blog/rto-reduction-chart';
 
 export function generateStaticParams() {
   return blogPosts.map((post) => ({
     slug: post.slug,
   }));
 }
-
-const RtoReductionChart = () => (
-    <div className="my-8 h-[300px] bg-card p-4 rounded-lg border">
-      <ResponsiveContainer width="100%" height="100%">
-        <BarChart
-          data={[
-            { name: 'Q1 (Before)', RTO_Rate: 35 },
-            { name: 'Q2 (After)', RTO_Rate: 20 },
-          ]}
-        >
-          <XAxis dataKey="name" stroke="hsl(var(--muted-foreground))" fontSize={12} />
-          <YAxis stroke="hsl(var(--muted-foreground))" fontSize={12} unit="%" />
-          <Tooltip
-            contentStyle={{
-              background: 'hsl(var(--background))',
-              borderColor: 'hsl(var(--border))',
-            }}
-          />
-          <Bar dataKey="RTO_Rate" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
-        </BarChart>
-      </ResponsiveContainer>
-    </div>
-  );
-
 
 export default function BlogPostPage({ params }: { params: { slug: string } }) {
   const post = blogPosts.find((p) => p.slug === params.slug);
