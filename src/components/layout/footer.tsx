@@ -24,7 +24,7 @@ export default function Footer() {
           <div className="col-span-1 md:col-span-1">
             <Link href="/" className="flex items-center gap-2 mb-4">
               <BotMessageSquare className="h-8 w-8 text-primary" />
-              <span className="text-xl font-bold">ReturnProfit.ai</span>
+              <span className="text-xl font-bold">Returnprofit.online</span>
             </Link>
             <p className="text-sm text-muted-foreground">Smarter D2C Starts Here.</p>
           </div>
@@ -67,7 +67,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="mt-8 border-t pt-8 text-center text-sm text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} ReturnProfit.ai. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Returnprofit.online. All rights reserved.</p>
         </div>
       </div>
     </footer>

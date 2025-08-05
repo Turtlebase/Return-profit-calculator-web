@@ -19,7 +19,7 @@ export default function PrivacyPage() {
 
           <div className="prose prose-lg dark:prose-invert max-w-none">
             <p>
-              Welcome to ReturnProfit.ai. We are committed to protecting your privacy and handling your data in an open and transparent manner. This privacy policy explains how we collect, use, and share information about you when you use our website, tools, and services (collectively, our "Services").
+              Welcome to Returnprofit.online. We are committed to protecting your privacy and handling your data in an open and transparent manner. This privacy policy explains how we collect, use, and share information about you when you use our website, tools, and services (collectively, our "Services").
             </p>
 
             <h2>1. Information We Collect</h2>
@@ -49,7 +49,7 @@ export default function PrivacyPage() {
 
             <h2>3. How We Share Information</h2>
             <p>
-              We do not share your personal information with companies, organizations, or individuals outside of ReturnProfit.ai except in the following cases:
+              We do not share your personal information with companies, organizations, or individuals outside of Returnprofit.online except in the following cases:
             </p>
             <ul>
                 <li><strong>With your consent:</strong> We will share personal information with third parties when we have your explicit consent to do so.</li>

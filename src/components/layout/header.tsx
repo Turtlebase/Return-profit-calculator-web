@@ -14,6 +14,7 @@ export default function Header() {
     { name: "Tools", href: "/#tools" },
     { name: "About", href: "/about" },
     { name: "Blog", href: "/blog" },
+    { name: "Contact", href: "/contact" },
   ];
 
   return (
@@ -21,7 +22,7 @@ export default function Header() {
       <div className="container flex h-16 items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
           <BotMessageSquare className="h-8 w-8 text-primary" />
-          <span className="text-xl font-bold">ReturnProfit.ai</span>
+          <span className="text-xl font-bold">Returnprofit.online</span>
         </Link>
 
         <nav className="hidden md:flex items-center gap-6">
@@ -55,7 +56,7 @@ export default function Header() {
                 <div className="flex items-center justify-between p-4 border-b">
                    <Link href="/" className="flex items-center gap-2" onClick={() => setIsOpen(false)}>
                       <BotMessageSquare className="h-6 w-6 text-primary" />
-                      <span className="font-bold">ReturnProfit.ai</span>
+                      <span className="font-bold">Returnprofit.online</span>
                    </Link>
                 </div>
                 <nav className="flex flex-col gap-4 p-4">

@@ -3,7 +3,7 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
 
 export const metadata: Metadata = {
-  title: 'ReturnProfit.ai - Maximize D2C Profits. Minimize RTO Losses.',
+  title: 'Returnprofit.online - Maximize D2C Profits. Minimize RTO Losses.',
   description: 'AI-powered tools & calculators for Direct-to-Consumer entrepreneurs. Reduce RTO, shipping losses, and COD fraud.',
 };
 
