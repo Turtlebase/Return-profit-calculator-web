@@ -1,6 +1,6 @@
 
 import { notFound } from 'next/navigation';
-import { blogPosts } from '@/components/blog/blog-card';
+import { blogPosts } from '@/lib/blog-data';
 import Header from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
 import Image from 'next/image';

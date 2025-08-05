@@ -1,6 +1,7 @@
 
 import { Button } from "@/components/ui/button";
-import { BlogCard, blogPosts } from "@/components/blog/blog-card";
+import { BlogCard } from "@/components/blog/blog-card";
+import { blogPosts } from "@/lib/blog-data";
 import Link from "next/link";
 
 
