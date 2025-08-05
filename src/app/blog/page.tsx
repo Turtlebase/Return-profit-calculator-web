@@ -3,6 +3,13 @@ import { BlogCard } from '@/components/blog/blog-card';
 import { blogPosts } from '@/lib/blog-data';
 import Footer from '@/components/layout/footer';
 import Header from '@/components/layout/header';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'D2C Profitability & RTO Reduction Blog',
+  description: 'Actionable insights, strategies, and expert advice for D2C entrepreneurs looking to boost profits and minimize RTO losses.',
+}
+
 
 export default function BlogPage() {
   return (

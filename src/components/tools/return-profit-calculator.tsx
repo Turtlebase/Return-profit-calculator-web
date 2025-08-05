@@ -18,9 +18,6 @@ export function ReturnProfitCalculator() {
 
     const {
         netProfitPerOrder,
-        totalRevenue,
-        totalCost,
-        netProfit,
         breakEvenReturnRate,
         profitPerSuccessfulSale,
         lossPerReturnedSale
@@ -48,15 +45,14 @@ export function ReturnProfitCalculator() {
         const profitPerOrder = netProfitFor100Orders / numberOfOrders;
         
         const profitPerSale = sp - c - sc - (sp * pgf);
-        const lossPerReturn = c + sc + sc + rpc; // COGS is lost, forward+return shipping, processing cost
+        // Cost of a return is the lost COGS, forward shipping, return shipping, and processing.
+        const lossPerReturn = c + sc + rpc; 
 
+        // The break-even rate is where the profit from good sales equals the loss from returned sales.
         const ber = profitPerSale > 0 ? (profitPerSale / (profitPerSale + lossPerReturn)) * 100 : 0;
 
         return {
             netProfitPerOrder: profitPerOrder,
-            totalRevenue: revenueFromSuccessful,
-            totalCost: totalCostOfBusiness,
-            netProfit: netProfitFor100Orders,
             breakEvenReturnRate: ber,
             profitPerSuccessfulSale: profitPerSale,
             lossPerReturnedSale: lossPerReturn,
@@ -67,19 +63,19 @@ export function ReturnProfitCalculator() {
         <div className="p-4 grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
             <div className="space-y-4">
                 <div>
-                    <Label>Selling Price ($)</Label>
+                    <Label>Selling Price (₹)</Label>
                     <Input type="number" value={sellingPrice} onChange={(e) => setSellingPrice(e.target.value)} />
                 </div>
                 <div>
-                    <Label>Cost of Goods Sold (COGS) ($)</Label>
+                    <Label>Cost of Goods Sold (COGS) (₹)</Label>
                     <Input type="number" value={cogs} onChange={(e) => setCogs(e.target.value)} />
                 </div>
                 <div>
-                    <Label>Forward Shipping Cost ($)</Label>
+                    <Label>Forward Shipping Cost (₹)</Label>
                     <Input type="number" value={shippingCost} onChange={(e) => setShippingCost(e.target.value)} />
                 </div>
                 <div>
-                    <Label>Return Processing & Reverse Shipping ($)</Label>
+                    <Label>Return Processing & Reverse Shipping (₹)</Label>
                     <Input type="number" value={returnProcessingCost} onChange={(e) => setReturnProcessingCost(e.target.value)} />
                 </div>
                 <div>
@@ -100,20 +96,20 @@ export function ReturnProfitCalculator() {
                       <div className="flex justify-between items-center p-3 rounded-lg bg-background">
                           <span className="text-muted-foreground">True Net Profit Per Order</span>
                           <span className={`font-bold text-xl ${netProfitPerOrder >= 0 ? 'text-green-500' : 'text-destructive'}`}>
-                              ${netProfitPerOrder.toFixed(2)}
+                              ₹{netProfitPerOrder.toFixed(2)}
                           </span>
                       </div>
                       <div className="flex justify-between items-center p-3 rounded-lg bg-background">
                           <span className="text-muted-foreground">Profit on a successful sale</span>
-                          <span className="font-bold text-md text-green-500">${profitPerSuccessfulSale.toFixed(2)}</span>
+                          <span className="font-bold text-md text-green-500">₹{profitPerSuccessfulSale.toFixed(2)}</span>
                       </div>
                       <div className="flex justify-between items-center p-3 rounded-lg bg-background">
                           <span className="text-muted-foreground">Loss on a returned sale</span>
-                          <span className="font-bold text-md text-destructive">-${lossPerReturnedSale.toFixed(2)}</span>
+                          <span className="font-bold text-md text-destructive">-₹{lossPerReturnedSale.toFixed(2)}</span>
                       </div>
                   </CardContent>
               </Card>
-              <Alert variant={returnRate > breakEvenReturnRate ? "destructive" : "default"}>
+              <Alert variant={returnRate > breakEvenReturnRate && breakEvenReturnRate > 0 ? "destructive" : "default"}>
                   <Info className="h-4 w-4" />
                   <AlertTitle>Break-Even Return Rate</AlertTitle>
                   <AlertDescription>

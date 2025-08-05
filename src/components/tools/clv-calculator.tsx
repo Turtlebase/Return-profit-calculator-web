@@ -18,7 +18,10 @@ export function CLVCalculator() {
         const grossMargin = Number(gcm) / 100 || 0;
         const customerLifespan = Number(lifespan) || 0;
 
+        // Customer Value = Average Order Value * Average Purchase Frequency
         const cv = avgOrderValue * avgPurchaseFreq;
+        
+        // CLV = Customer Value * Gross Margin * Customer Lifespan
         const calculatedClv = cv * grossMargin * customerLifespan;
         
         return {
@@ -31,19 +34,19 @@ export function CLVCalculator() {
         <div className="p-4 grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
             <div className="space-y-6">
                 <div>
-                    <Label>Average Order Value (AOV) ($)</Label>
+                    <Label>Average Order Value (AOV) (₹)</Label>
                     <Input type="number" value={aov} onChange={(e) => setAov(e.target.value)} />
                 </div>
                 <div>
-                    <Label>Average Purchase Frequency (per year)</Label>
-                    <Input type="number" value={apfr} onChange={(e) => setApfr(e.target.value)} />
+                    <Label>Purchases Per Year (Frequency)</Label>
+                    <Input type="number" step="0.1" value={apfr} onChange={(e) => setApfr(e.target.value)} />
                 </div>
                  <div>
-                    <Label>Customer Lifespan (years)</Label>
+                    <Label>Avg. Customer Lifespan (years)</Label>
                     <Input type="number" value={lifespan} onChange={(e) => setLifespan(e.target.value)} />
                 </div>
                 <div>
-                    <Label>Gross Customer Margin - {gcm}%</Label>
+                    <Label>Gross Profit Margin - {gcm}%</Label>
                     <Slider value={[gcm]} onValueChange={(val) => setGcm(val[0])} max={100} step={1} />
                 </div>
             </div>
@@ -55,13 +58,13 @@ export function CLVCalculator() {
                      <div className="flex flex-col justify-between items-center p-4 rounded-lg bg-background text-center">
                         <span className="text-muted-foreground mb-1">Estimated CLV</span>
                         <span className="font-bold text-4xl text-primary">
-                          ${clv.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}
+                          ₹{clv.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}
                         </span>
                     </div>
                     <div className="flex justify-between items-center p-3 rounded-lg bg-background">
-                        <span className="text-muted-foreground">Customer Value (per year)</span>
+                        <span className="text-muted-foreground">Annual Customer Value</span>
                         <span className="font-bold text-lg">
-                           ${customerValue.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}
+                           ₹{customerValue.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}
                         </span>
                     </div>
                     <p className="text-xs text-muted-foreground text-center pt-2">

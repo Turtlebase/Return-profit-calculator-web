@@ -6,6 +6,12 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Contact Us',
+  description: 'Get in touch with the Returnprofit.online team. We are here to answer your questions about our D2C profitability tools.',
+}
 
 export default function ContactPage() {
   return (

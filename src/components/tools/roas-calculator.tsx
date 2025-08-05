@@ -31,11 +31,11 @@ export function ROASCalculator() {
     <div className="p-4 grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
       <div className="space-y-6">
         <div>
-          <Label htmlFor="adSpend">Total Ad Spend ($)</Label>
+          <Label htmlFor="adSpend">Total Ad Spend (₹)</Label>
           <Input id="adSpend" type="number" value={adSpend} onChange={(e) => setAdSpend(e.target.value)} />
         </div>
         <div>
-          <Label htmlFor="revenue">Total Revenue ($)</Label>
+          <Label htmlFor="revenue">Total Revenue (₹)</Label>
           <Input id="revenue" type="number" value={revenue} onChange={(e) => setRevenue(e.target.value)} />
         </div>
         <div>
@@ -59,7 +59,7 @@ export function ROASCalculator() {
           <div className="flex justify-between items-center p-3 rounded-lg bg-background">
             <span className="text-muted-foreground">Net Profit</span>
             <span className={`font-bold text-lg ${profit >= 0 ? 'text-green-500' : 'text-destructive'}`}>
-              ${profit.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}
+              ₹{profit.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}
             </span>
           </div>
         </CardContent>

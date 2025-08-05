@@ -7,6 +7,36 @@ import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
 import { RtoReductionChart } from '@/components/blog/rto-reduction-chart';
 import { Flowchart } from '@/components/blog/flowchart';
+import type { Metadata } from 'next';
+
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  const post = blogPosts.find((p) => p.slug === params.slug);
+
+  if (!post) {
+    return {
+      title: 'Post Not Found',
+    }
+  }
+
+  return {
+    title: post.title,
+    description: post.description,
+    openGraph: {
+      title: post.title,
+      description: post.description,
+      type: 'article',
+      url: `https://returnprofit.online/blog/${post.slug}`,
+      images: [
+        {
+          url: post.image,
+          width: 1200,
+          height: 600,
+          alt: post.title,
+        },
+      ],
+    },
+  }
+}
 
 export function generateStaticParams() {
   return blogPosts.map((post) => ({

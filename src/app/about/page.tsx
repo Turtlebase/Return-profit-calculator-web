@@ -2,6 +2,12 @@
 import Header from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
 import Image from 'next/image';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'About Us',
+  description: 'Learn about the mission of Returnprofit.online to empower D2C entrepreneurs with AI-driven tools for sustainable, profitable growth.',
+}
 
 export default function AboutPage() {
   return (
