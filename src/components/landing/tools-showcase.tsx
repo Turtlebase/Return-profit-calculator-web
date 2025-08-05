@@ -6,6 +6,8 @@ import {
   ShieldCheck,
   Target,
   Percent,
+  TrendingUp,
+  HeartHandshake
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
@@ -13,6 +15,9 @@ import { Button } from '@/components/ui/button';
 import { RTOLossAnalyzer } from '@/components/tools/rto-loss-analyzer';
 import { ROASCalculator } from '@/components/tools/roas-calculator';
 import { DiscountImpactCalculator } from '@/components/tools/discount-impact-calculator';
+import { CODRiskEvaluator } from '@/components/tools/cod-risk-evaluator';
+import { ReturnProfitCalculator } from '@/components/tools/return-profit-calculator';
+import { CLVCalculator } from '@/components/tools/clv-calculator';
 
 const tools = [
   {
@@ -40,21 +45,26 @@ const tools = [
     id: 'cod-risk',
     icon: ShieldCheck,
     title: 'COD Risk Evaluator',
-    description: 'Assess fraud risk for Cash on Delivery orders.',
-    component: <div className="p-8 text-center text-muted-foreground">This tool is coming soon!</div>,
-    isComingSoon: true,
+    description: 'Use AI to assess fraud risk for Cash on Delivery orders.',
+    component: <CODRiskEvaluator />,
   },
   {
     id: 'return-profit',
     icon: Calculator,
-    title: 'Return Profit Calculator',
-    description: 'Calculate net profit after all returns and fees.',
-    component: <div className="p-8 text-center text-muted-foreground">This tool is coming soon!</div>,
-    isComingSoon: true,
+    title: 'Net Profit Calculator',
+    description: 'Calculate net profit after all returns, fees, and costs.',
+    component: <ReturnProfitCalculator />,
+  },
+  {
+    id: 'clv-calculator',
+    icon: HeartHandshake,
+    title: 'CLV Calculator',
+    description: 'Estimate the lifetime value of your customers.',
+    component: <CLVCalculator />,
   },
 ];
 
-const ToolCard = ({ icon: Icon, title, description, component, isComingSoon }: (typeof tools)[0]) => (
+const ToolCard = ({ icon: Icon, title, description, component }: (typeof tools)[0]) => (
   <Dialog>
     <DialogTrigger asChild>
       <Card className="group cursor-pointer transition-all duration-300 hover:shadow-primary/20 hover:shadow-2xl hover:-translate-y-2 bg-card/50 backdrop-blur-sm border-white/10">
