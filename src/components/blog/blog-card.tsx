@@ -13,9 +13,9 @@ interface BlogCardProps {
 
 export function BlogCard({ post }: BlogCardProps) {
   return (
-    <Card className="flex flex-col overflow-hidden group">
-      <CardHeader className="p-0">
-        <Link href={`/blog/${post.slug}`}>
+    <Card className="flex flex-col overflow-hidden group transition-all duration-300 hover:shadow-xl hover:-translate-y-2">
+       <CardHeader className="p-0 overflow-hidden">
+        <Link href={`/blog/${post.slug}`} className="block">
           <Image
             src={post.image}
             alt={post.title}
@@ -26,10 +26,10 @@ export function BlogCard({ post }: BlogCardProps) {
           />
         </Link>
       </CardHeader>
-      <CardContent className="p-6 flex-1">
-        <Badge variant="secondary" className="mb-2">{post.category}</Badge>
-        <Link href={`/blog/${post.slug}`}>
-          <CardTitle className="text-lg leading-tight">{post.title}</CardTitle>
+      <CardContent className="p-6 flex-1 flex flex-col">
+        <Badge variant="secondary" className="mb-2 w-fit">{post.category}</Badge>
+        <Link href={`/blog/${post.slug}`} className="flex-1">
+          <CardTitle className="text-lg leading-tight group-hover:text-primary transition-colors">{post.title}</CardTitle>
         </Link>
       </CardContent>
       <CardFooter className="p-6 pt-0">
@@ -38,3 +38,4 @@ export function BlogCard({ post }: BlogCardProps) {
     </Card>
   );
 }
+
