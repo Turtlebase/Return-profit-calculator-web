@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { TrendingUp, BarChart, ShieldCheck } from "lucide-react";
+import { TrendingUp, Calculator, ShieldCheck } from "lucide-react";
 
 const useCases = [
   {
@@ -8,7 +8,7 @@ const useCases = [
     description: "Stop guessing. Our calculator tells you the exact Return On Ad Spend you need to be profitable.",
   },
   {
-    icon: BarChart,
+    icon: Calculator,
     title: "Calculate Profit, Not Just Revenue",
     description: "Factor in hidden costs like returns, shipping, taxes, and COD fees to see your true net profit.",
   },

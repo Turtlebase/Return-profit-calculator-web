@@ -1,11 +1,12 @@
+
 import Link from 'next/link';
 import { BotMessageSquare, Twitter, Linkedin, Instagram } from 'lucide-react';
 
 export default function Footer() {
   const footerLinks = [
     { name: 'About', href: '#' },
-    { name: 'Tools', href: '#tools' },
-    { name: 'Blog', href: '#blog' },
+    { name: 'Tools', href: '/#tools' },
+    { name: 'Blog', href: '/blog' },
     { name: 'Privacy Policy', href: '#' },
     { name: 'Contact Us', href: '#' },
   ];
@@ -56,7 +57,7 @@ export default function Footer() {
                 <h3 className="font-semibold mb-4">Socials</h3>
                 <div className="flex space-x-4">
                     {socialLinks.map((social) => (
-                        <Link key={social.name} href={social.href} className="text-muted-foreground hover:text-foreground" key={social.name}>
+                        <Link key={social.name} href={social.href} className="text-muted-foreground hover:text-foreground">
                             <social.icon className="h-5 w-5" />
                             <span className="sr-only">{social.name}</span>
                         </Link>
