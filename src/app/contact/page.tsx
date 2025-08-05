@@ -30,7 +30,7 @@ export default function ContactPage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-              <div className="bg-card p-8 rounded-lg border">
+              <div className="bg-card p-6 sm:p-8 rounded-lg border">
                 <h2 className="text-2xl font-bold mb-6">Send us a message</h2>
                 <form className="space-y-6">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -65,7 +65,7 @@ export default function ContactPage() {
                     <div>
                         <h3 className="text-lg font-semibold">Email</h3>
                         <p className="text-muted-foreground">Our inbox is always open. We'll get back to you within one business day.</p>
-                        <a href="mailto:info@returnprofit.online" className="text-primary font-medium mt-2 block">info@returnprofit.online</a>
+                        <a href="mailto:info@returnprofit.online" className="text-primary font-medium mt-2 block break-all">info@returnprofit.online</a>
                     </div>
                  </div>
               </div>
