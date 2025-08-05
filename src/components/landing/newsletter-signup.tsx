@@ -1,7 +1,56 @@
+"use client";
+
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { subscribeToNewsletter } from "@/app/actions";
+import { useToast } from "@/hooks/use-toast";
+import { Loader2, MailCheck } from "lucide-react";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
+
+
+const formSchema = z.object({
+  email: z.string().email({ message: "Please enter a valid email." }),
+});
+
 
 export default function NewsletterSignup() {
+  const { toast } = useToast();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: "",
+    },
+  });
+
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsLoading(true);
+    const result = await subscribeToNewsletter(values.email);
+    setIsLoading(false);
+
+    if (result.success) {
+      setIsSuccess(true);
+      toast({
+        title: "Subscribed!",
+        description: result.message,
+      });
+      form.reset();
+    } else {
+      toast({
+        variant: "destructive",
+        title: "Uh oh!",
+        description: result.message,
+      });
+    }
+  }
+
+
   return (
     <section className="py-24 sm:py-32 bg-background">
       <div className="container">
@@ -23,21 +72,32 @@ export default function NewsletterSignup() {
           <p className="mx-auto mt-4 max-w-xl text-lg leading-8 text-primary-foreground/80">
             Join our newsletter for exclusive tips, tool updates, and strategies to scale your D2C brand.
           </p>
-          <form className="mx-auto mt-10 flex max-w-md gap-x-4">
-            <label htmlFor="email-address" className="sr-only">Email address</label>
-            <Input
-              id="email-address"
-              name="email"
-              type="email"
-              autoComplete="email"
-              required
-              className="min-w-0 flex-auto rounded-md border-0 bg-white/5 px-3.5 py-2 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-white sm:text-sm sm:leading-6"
-              placeholder="Enter your email"
-            />
-            <Button type="submit" variant="secondary" className="bg-white/90 text-primary hover:bg-white">
-              Subscribe
-            </Button>
-          </form>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="mx-auto mt-10 flex max-w-md gap-x-4">
+               <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem className="flex-auto">
+                      <FormControl>
+                          <Input
+                            type="email"
+                            autoComplete="email"
+                            required
+                            className="min-w-0 flex-auto rounded-md border-0 bg-white/5 px-3.5 py-2 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-white sm:text-sm sm:leading-6 h-11"
+                            placeholder="Enter your email"
+                            {...field}
+                          />
+                      </FormControl>
+                      <FormMessage className="text-left text-primary-foreground/80"/>
+                    </FormItem>
+                  )}
+                />
+              <Button type="submit" variant="secondary" className="bg-white/90 text-primary hover:bg-white" disabled={isLoading}>
+                {isLoading ? <Loader2 className="animate-spin" /> : 'Subscribe'}
+              </Button>
+            </form>
+          </Form>
         </div>
       </div>
     </section>
