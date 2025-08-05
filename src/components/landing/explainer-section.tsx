@@ -31,7 +31,7 @@ export default function ExplainerSection() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {useCases.map((useCase) => (
-            <Card key={useCase.title} className="bg-background/50 border-white/10 text-center">
+            <Card key={useCase.title} className="bg-background/50 border-white/10 text-center transition-all duration-300 hover:shadow-primary/20 hover:-translate-y-2">
               <CardHeader>
                 <div className="mx-auto bg-primary/10 p-4 rounded-full w-fit">
                     <useCase.icon className="w-8 h-8 text-primary" />
