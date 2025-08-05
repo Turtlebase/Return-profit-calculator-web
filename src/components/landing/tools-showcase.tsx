@@ -64,30 +64,30 @@ const tools = [
 ];
 
 const ToolCard = ({ icon: Icon, title, description, component }: (typeof tools)[0]) => (
-  <Dialog>
-    <DialogTrigger asChild>
-      <div className="group relative cursor-pointer rounded-xl p-px transition-all duration-300 bg-background hover:bg-primary/5">
-         <div className="relative h-full rounded-[11px] bg-background p-6">
-            <div className="mb-4">
-               <div className="p-3 rounded-lg bg-primary/10 w-fit">
-                  <Icon className="w-6 h-6 text-primary" />
-               </div>
-            </div>
-            <h3 className="text-lg font-semibold mb-1">{title}</h3>
-            <p className="text-muted-foreground text-sm mb-4">{description}</p>
-            <Button variant="link" className="p-0 h-auto text-primary">Open Tool &rarr;</Button>
-         </div>
-         <div className="absolute inset-0 rounded-xl p-px opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-gradient-to-br from-primary to-accent" aria-hidden="true"></div>
-      </div>
-    </DialogTrigger>
-    <DialogContent className="sm:max-w-[600px] bg-background">
-      <DialogHeader>
-        <DialogTitle className="flex items-center gap-2"><Icon className="w-5 h-5" /> {title}</DialogTitle>
-      </DialogHeader>
-      {component}
-    </DialogContent>
-  </Dialog>
-);
+    <Dialog>
+      <DialogTrigger asChild>
+        <div className="group relative cursor-pointer overflow-hidden rounded-xl p-px bg-gradient-to-br from-primary/20 to-secondary/20 transition-all duration-300 hover:from-primary/50 hover:to-accent/50 hover:shadow-2xl hover:shadow-primary/20">
+          <div className="h-full rounded-[11px] bg-background p-6 transition-all duration-300 group-hover:-translate-y-1">
+              <div className="mb-4">
+                 <div className="p-3 rounded-lg bg-primary/10 w-fit">
+                    <Icon className="w-6 h-6 text-primary" />
+                 </div>
+              </div>
+              <h3 className="text-lg font-semibold mb-1 text-foreground">{title}</h3>
+              <p className="text-muted-foreground text-sm mb-4">{description}</p>
+              <Button variant="link" className="p-0 h-auto text-primary">Open Tool &rarr;</Button>
+           </div>
+        </div>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[600px] bg-background">
+        <DialogHeader>
+          <DialogTitle className="flex items-center gap-2"><Icon className="w-5 h-5" /> {title}</DialogTitle>
+        </DialogHeader>
+        {component}
+      </DialogContent>
+    </Dialog>
+  );
+  
 
 export default function ToolsShowcase() {
   return (
