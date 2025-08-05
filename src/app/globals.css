@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -80,9 +81,7 @@
   }
   .prose blockquote {
     @apply border-l-4 border-primary bg-primary/10 p-4 my-6 rounded-r-lg;
-  }
-  .prose blockquote p {
-    @apply text-primary-foreground/80 not-italic;
+    @apply text-primary-foreground/90 not-italic;
   }
   .prose code {
     @apply bg-muted text-muted-foreground rounded-md px-1.5 py-1 text-sm;
@@ -95,5 +94,8 @@
   }
   .prose ul > li::before {
     @apply bg-primary/50;
+  }
+  .prose .formula-card {
+    @apply text-center font-mono my-4 p-4 bg-card rounded-lg border text-lg;
   }
 }

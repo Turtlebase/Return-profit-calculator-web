@@ -163,14 +163,14 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
                 
                 <h3>The Simple Formula Everyone Gets Wrong</h3>
                 <p>The basic formula for Break-Even ROAS is simple enough:</p>
-                <p className="text-center font-mono my-4 p-4 bg-card rounded-lg border">Break-Even ROAS = 1 / Gross Margin %</p>
+                <div className="formula-card">Break-Even ROAS = 1 / Gross Margin %</div>
                 <p>So if your Gross Margin is 40% (or 0.4), your Break-Even ROAS is 1 / 0.4 = 2.5x. This means you need to make ₹2.50 for every ₹1.00 you spend on ads just to break even.</p>
                 <p>This seems simple, but <strong>most founders calculate their gross margin incorrectly.</strong> They just do (Selling Price - Landed Cost of Product). They forget all the other variable costs that eat into every single sale, which gives them a dangerously misleading Break-Even ROAS.</p>
 
                 <h3>Calculating Your *True* Contribution Margin</h3>
                 <p>To get your real Break-Even ROAS, you must calculate your true margin per sale after all variable costs are removed. This is often called the Contribution Margin. Your true profit per sale, before marketing costs, is:</p>
                 
-                <p className="text-center font-mono my-4 p-4 bg-card rounded-lg border">Contribution Profit = AOV - COGS - Shipping - Gateway Fees - RTO Loss</p>
+                <div className="formula-card">Contribution Profit = AOV - COGS - Shipping - Gateway Fees - RTO Loss</div>
                 
                 <p>Let's take a realistic example for a Shopify store in India:</p>
                 <ul>
@@ -186,7 +186,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
                 
                 <h3>Finding Your North Star: The Real Break-Even ROAS</h3>
                 <p>Now we can calculate our true Break-Even ROAS:</p>
-                <p className="text-center font-mono my-4 p-4 bg-card rounded-lg border">True Break-Even ROAS = 1 / 0.46 = <strong>2.17x</strong></p>
+                <div className="formula-card">True Break-Even ROAS = 1 / 0.46 = <strong>2.17x</strong></div>
                 
                 <p>This number is your north star. When you're setting campaign budgets and target ROAS in your ad platforms, this is the absolute minimum you must achieve to not lose money. Any marketing agency or team member who doesn't know this number for your business is flying blind. Don't spend another dollar until you know your number.</p>
                 </>
