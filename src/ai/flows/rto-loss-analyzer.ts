@@ -15,7 +15,7 @@ const AnalyzeRtoLossInputSchema = z.object({
   historicalData: z
     .string()
     .describe(
-      'Historical sales and returns data, including order details, customer information, and return reasons.'
+      'Historical sales and returns data, including order details, customer information, and return reasons. This will be provided as a string, likely from a CSV file.'
     ),
   marketConditions: z
     .string()
@@ -46,7 +46,7 @@ const prompt = ai.definePrompt({
   output: {schema: AnalyzeRtoLossOutputSchema},
   prompt: `You are an expert in analyzing RTO (Return to Origin) loss for D2C e-commerce businesses.
 
-  Analyze the provided historical data and market conditions to predict potential RTO loss, identify key risk factors, and recommend strategies to mitigate the loss.
+  Analyze the provided historical data and market conditions to predict potential RTO loss, identify key risk factors, and recommend strategies to mitigate the loss. The historical data is provided as a string, likely from a CSV file.
 
   Historical Data: {{{historicalData}}}
   Market Conditions: {{{marketConditions}}}
@@ -65,6 +65,9 @@ const analyzeRtoLossFlow = ai.defineFlow(
   },
   async input => {
     const {output} = await prompt(input);
-    return output!;
+    if (!output) {
+        throw new Error("The model did not return an output.");
+    }
+    return output;
   }
 );

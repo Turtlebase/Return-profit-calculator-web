@@ -7,14 +7,15 @@ import { z } from "zod";
 import { getRtoLossAnalysis } from "@/app/actions";
 import { type AnalyzeRtoLossOutput } from "@/ai/flows/rto-loss-analyzer";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Loader2, Zap, ShieldAlert, Lightbulb } from "lucide-react";
+import { Loader2, Zap, ShieldAlert, Lightbulb, Upload } from "lucide-react";
 
 const formSchema = z.object({
-  historicalData: z.string().min(50, { message: "Please provide more detailed historical data." }),
+  historicalData: z.string().min(1, { message: "Please upload a CSV file." }),
   marketConditions: z.string().min(20, { message: "Please describe market conditions." }),
 });
 
@@ -22,6 +23,7 @@ export function RTOLossAnalyzer() {
   const [result, setResult] = useState<AnalyzeRtoLossOutput | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [fileName, setFileName] = useState("");
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -30,6 +32,19 @@ export function RTOLossAnalyzer() {
       marketConditions: "",
     },
   });
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setFileName(file.name);
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const text = e.target?.result as string;
+        form.setValue("historicalData", text);
+      };
+      reader.readAsText(file);
+    }
+  };
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
@@ -58,11 +73,17 @@ export function RTOLossAnalyzer() {
                 <FormItem>
                   <FormLabel>Historical Sales & Returns Data</FormLabel>
                   <FormControl>
-                    <Textarea
-                      placeholder="e.g., Paste your last 30 days of orders, returns, locations, product types, etc."
-                      className="min-h-[150px]"
-                      {...field}
-                    />
+                    <div>
+                      <label htmlFor="file-upload" className="relative cursor-pointer rounded-md bg-background font-medium text-primary focus-within:outline-none focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 hover:text-primary">
+                          <div className="flex items-center justify-center w-full h-32 border-2 border-dashed rounded-lg">
+                            <div className="text-center">
+                              <Upload className="mx-auto h-8 w-8 text-muted-foreground" />
+                              <p className="mt-1 text-sm text-muted-foreground">{fileName ? fileName : 'Click to upload a .csv file'}</p>
+                            </div>
+                          </div>
+                          <input id="file-upload" name="file-upload" type="file" className="sr-only" accept=".csv" onChange={handleFileChange} />
+                      </label>
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -133,7 +154,7 @@ export function RTOLossAnalyzer() {
               </CardContent>
             </Card>
           </div>
-           <Button onClick={() => { setResult(null); form.reset(); }} variant="outline" className="w-full">
+           <Button onClick={() => { setResult(null); form.reset(); setFileName(""); }} variant="outline" className="w-full">
             Start New Analysis
           </Button>
         </div>
