@@ -62,16 +62,6 @@ export default function ContactPage() {
                         <a href="mailto:info@returnprofit.online" className="text-primary font-medium mt-2 block">info@returnprofit.online</a>
                     </div>
                  </div>
-                 <div className="flex items-start gap-4 p-6 bg-card rounded-lg border">
-                    <div className="p-3 bg-primary/10 rounded-lg text-primary">
-                        <MapPin className="w-6 h-6" />
-                    </div>
-                    <div>
-                        <h3 className="text-lg font-semibold">Our Office</h3>
-                        <p className="text-muted-foreground">We are a remote-first company, but our headquarters are in the heart of the city.</p>
-                        <p className="font-medium mt-2">123 Commerce St, New Delhi, 110001</p>
-                    </div>
-                 </div>
               </div>
 
             </div>
