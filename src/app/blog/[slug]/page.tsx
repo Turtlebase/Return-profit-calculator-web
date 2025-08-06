@@ -1,3 +1,4 @@
+
 'use client';
 import { notFound } from 'next/navigation';
 import { blogPosts as staticBlogPosts, type BlogPost } from '@/lib/blog-data';
