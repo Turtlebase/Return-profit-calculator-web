@@ -11,49 +11,6 @@ import { useEffect, useState } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
 import Head from 'next/head';
 
-// This function would ideally be used with generateStaticParams if we weren't also
-// handling client-side generated posts. For now, it helps define metadata.
-export async function generateMetadata({ params }: { params: { slug: string } }) {
-  const post = staticBlogPosts.find((p) => p.slug === params.slug);
-
-  if (!post) {
-    return {
-      title: 'Blog Post | Returnprofit.online',
-      description: 'An insightful article from the Returnprofit.online blog.',
-    };
-  }
-
-  return {
-    title: `${post.title} | Returnprofit.online`,
-    description: post.description,
-    alternates: {
-      canonical: `/blog/${post.slug}`,
-    },
-    openGraph: {
-        title: post.title,
-        description: post.description,
-        url: `https://returnprofit.online/blog/${post.slug}`,
-        images: [
-            {
-                url: post.image,
-                width: 1200,
-                height: 600,
-                alt: post.title,
-            },
-        ],
-        type: 'article',
-        publishedTime: new Date().toISOString(), // In a real app, this would be the post's publish date
-    },
-    twitter: {
-        card: 'summary_large_image',
-        title: post.title,
-        description: post.description,
-        images: [post.image],
-    },
-  };
-}
-
-
 export default function BlogPostPage({ params }: { params: { slug: string } }) {
   const [post, setPost] = useState<BlogPost | null | undefined>(undefined);
   const [isLoading, setIsLoading] = useState(true);
