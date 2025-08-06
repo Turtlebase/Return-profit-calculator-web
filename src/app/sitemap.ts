@@ -4,18 +4,32 @@ import { blogPosts } from '@/lib/blog-data';
 export default function sitemap(): MetadataRoute.Sitemap {
   const siteUrl = 'https://returnprofit.online';
 
+  const toolPages = [
+    'net-profit-calculator',
+    'roas-calculator',
+    'cod-risk-evaluator',
+    'rto-loss-analyzer',
+    'discount-impact-calculator',
+    'clv-calculator'
+  ].map(tool => ({
+    url: `${siteUrl}/tools/${tool}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly',
+    priority: 0.9,
+  }));
+
   const staticPages = [
     {
       url: siteUrl,
       lastModified: new Date(),
-      changeFrequency: 'yearly',
+      changeFrequency: 'weekly',
       priority: 1,
     },
     {
       url: `${siteUrl}/about`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
-      priority: 0.8,
+      priority: 0.7,
     },
     {
       url: `${siteUrl}/blog`,
@@ -45,9 +59,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const blogPageSitemap = blogPosts.map((post) => ({
     url: `${siteUrl}/blog/${post.slug}`,
-    lastModified: new Date(),
+    lastModified: new Date(), // In a real app, this would be the post's actual publication date
     changeFrequency: 'weekly',
-    priority: 0.9,
+    priority: 0.8,
   }));
 
   // Note: Dynamically generated posts from the admin panel are not included
@@ -56,6 +70,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [
     ...staticPages,
+    ...toolPages,
     ...blogPageSitemap,
   ]
 }
