@@ -1,4 +1,5 @@
 
+import * as React from 'react';
 import { ReturnProfitCalculator } from '@/components/tools/return-profit-calculator';
 import Header from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
