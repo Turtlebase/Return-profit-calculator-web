@@ -1,7 +1,9 @@
+
 'use server';
 
 import { analyzeRtoLoss, type AnalyzeRtoLossInput, type AnalyzeRtoLossOutput } from '@/ai/flows/rto-loss-analyzer';
 import { evaluateCodRisk, type CodRiskInput, type CodRiskOutput } from '@/ai/flows/cod-risk-evaluator';
+import { generateBlogPost as generateBlogPostFlow, type GenerateBlogPostInput, type GenerateBlogPostOutput } from '@/ai/flows/blog-post-generator';
 import { z } from 'zod';
 
 export async function getRtoLossAnalysis(input: AnalyzeRtoLossInput): Promise<AnalyzeRtoLossOutput> {
@@ -29,7 +31,7 @@ const emailSchema = z.string().email({ message: "Please enter a valid email addr
 export async function subscribeToNewsletter(email: string): Promise<{ success: boolean, message: string }> {
   try {
     emailSchema.parse(email);
-    // Here you would integrate with your actual newsletter service (e.g., Mailchimp, ConvertKit)
+    // In a real app, you'd integrate with an email service like Mailchimp or ConvertKit here.
     console.log(`Subscribing ${email} to the newsletter.`);
     
     // Simulate a successful subscription
@@ -41,4 +43,16 @@ export async function subscribeToNewsletter(email: string): Promise<{ success: b
     console.error("Newsletter Subscription Error:", error);
     return { success: false, message: "Something went wrong. Please try again." };
   }
+}
+
+export async function generateBlogPost(title: GenerateBlogPostInput): Promise<GenerateBlogPostOutput> {
+    try {
+        const result = await generateBlogPostFlow(title);
+        // The result.content is already a string, but if it contained complex HTML,
+        // it might need sanitization in a real app before being rendered.
+        return result;
+    } catch (error) {
+        console.error("Error in Blog Post Generation:", error);
+        throw new Error("Failed to generate the blog post from AI. Please try a different title.");
+    }
 }

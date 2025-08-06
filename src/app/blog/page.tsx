@@ -1,17 +1,35 @@
 
+'use client';
+
+import { useEffect, useState } from 'react';
 import { BlogCard } from '@/components/blog/blog-card';
-import { blogPosts } from '@/lib/blog-data';
+import { blogPosts as initialBlogPosts, type BlogPost } from '@/lib/blog-data';
 import Footer from '@/components/layout/footer';
 import Header from '@/components/layout/header';
-import type { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: 'D2C Profitability & RTO Reduction Blog',
-  description: 'Actionable insights, strategies, and expert advice for D2C entrepreneurs looking to boost profits and minimize RTO losses.',
-}
-
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Sparkles } from 'lucide-react';
 
 export default function BlogPage() {
+  const [allPosts, setAllPosts] = useState<BlogPost[]>(initialBlogPosts);
+  const [newPost, setNewPost] = useState<BlogPost | null>(null);
+
+  useEffect(() => {
+    // Check for a new post from the admin page
+    const newPostJson = sessionStorage.getItem('newBlogPost');
+    if (newPostJson) {
+      try {
+        const post = JSON.parse(newPostJson);
+        setNewPost(post);
+        // Add the new post to the top of the list, avoiding duplicates
+        setAllPosts(prevPosts => [post, ...prevPosts.filter(p => p.slug !== post.slug)]);
+        // Clean up session storage
+        sessionStorage.removeItem('newBlogPost');
+      } catch (error) {
+        console.error("Failed to parse new blog post from session storage", error);
+      }
+    }
+  }, []);
+
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <Header />
@@ -27,8 +45,19 @@ export default function BlogPage() {
                 experts to help you scale.
               </p>
             </div>
+            
+            {newPost && (
+              <Alert className="mb-8 max-w-4xl mx-auto bg-primary/10 border-primary/20 animate-in fade-in-50">
+                <Sparkles className="h-4 w-4 text-primary" />
+                <AlertTitle className="text-primary">New Post Published!</AlertTitle>
+                <AlertDescription>
+                  Your AI-generated article "{newPost.title}" is now live.
+                </AlertDescription>
+              </Alert>
+            )}
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {blogPosts.map((post) => (
+              {allPosts.map((post) => (
                 <BlogCard key={post.slug} post={post} />
               ))}
             </div>
