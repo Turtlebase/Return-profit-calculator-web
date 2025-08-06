@@ -4,7 +4,30 @@ import Link from 'next/link';
 export default function Hero() {
   return (
     <section className="relative overflow-hidden bg-background">
-      <div className="absolute inset-0 z-0">
+      <div className="absolute inset-0 z-0 opacity-50">
+        <div
+            className="absolute inset-0 [mask-image:radial-gradient(farthest-side_at_top,white,transparent)]"
+        >
+            <svg
+                aria-hidden="true"
+                className="absolute inset-x-0 inset-y-[-50%] h-[200%] w-full"
+            >
+                <defs>
+                    <pattern
+                        id=":R1d6:-pattern"
+                        width="128"
+                        height="128"
+                        patternUnits="userSpaceOnUse"
+                        x="50%"
+                        y="100%"
+                        patternTransform="translate(0 -1)"
+                    >
+                        <path d="M.5 128V.5H128" fill="none" stroke="hsl(var(--primary) / 0.1)"></path>
+                    </pattern>
+                </defs>
+                <rect width="100%" height="100%" stroke="none" fill="url(#:R1d6:-pattern)"></rect>
+            </svg>
+        </div>
         <div className="absolute h-[500px] w-[500px] bg-primary/10 rounded-full -top-64 -left-64 blur-3xl"></div>
         <div className="absolute h-[400px] w-[400px] bg-accent/10 rounded-full -bottom-64 -right-64 blur-3xl"></div>
       </div>
@@ -17,12 +40,9 @@ export default function Hero() {
         <p className="mt-6 text-base sm:text-lg max-w-2xl mx-auto text-muted-foreground">
           AI-powered tools & calculators for Direct-to-Consumer entrepreneurs.
         </p>
-        <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-x-6">
-          <Button size="lg" asChild className="w-full sm:w-auto">
+        <div className="mt-10 flex items-center justify-center gap-x-6">
+          <Button size="lg" asChild>
             <Link href="#tools">Try Free Tools</Link>
-          </Button>
-          <Button size="lg" variant="outline" className="w-full sm:w-auto">
-            Get Report
           </Button>
         </div>
       </div>
