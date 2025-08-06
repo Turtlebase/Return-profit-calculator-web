@@ -23,7 +23,7 @@ export const blogPosts: BlogPost[] = [
     slug: "profit-vs-money-how-ad-spend-kills-d2c-cashflow",
     description: "Understand the critical difference between revenue, profit, and cash flow to avoid scaling into bankruptcy.",
     category: "Profitability",
-    image: "https://images.unsplash.com/photo-1620714223084-86c9df242562?q=80&w=1200&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1554224155-1696413565d3?q=80&w=1200&auto=format&fit=crop",
     dataAiHint: "business finance",
   },
   {
