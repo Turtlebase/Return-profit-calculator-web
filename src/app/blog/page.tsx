@@ -10,28 +10,44 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Sparkles } from 'lucide-react';
 
 export default function BlogPage() {
-  const [allPosts, setAllPosts] = useState<BlogPost[]>(initialBlogPosts);
+  const [allPosts, setAllPosts] = useState<BlogPost[]>(() => {
+    // Initialize with static posts
+    const posts = [...initialBlogPosts];
+    // Check for a session-stored post on initial load
+    const newPostJson = typeof window !== 'undefined' ? sessionStorage.getItem('newBlogPostForFeed') : null;
+    if (newPostJson) {
+      try {
+        const post = JSON.parse(newPostJson);
+        // Add to list if not already present
+        if (!posts.some(p => p.slug === post.slug)) {
+          posts.unshift(post);
+        }
+        sessionStorage.removeItem('newBlogPostForFeed');
+      } catch (error) {
+        console.error("Failed to parse new blog post from session storage", error);
+      }
+    }
+    return posts;
+  });
+
   const [newPostAlert, setNewPostAlert] = useState<BlogPost | null>(null);
 
   useEffect(() => {
-    // Check for a new post from the admin page to show an alert
+    // This effect handles showing the alert after navigation
     const newPostJson = sessionStorage.getItem('newBlogPost');
     if (newPostJson) {
       try {
         const post = JSON.parse(newPostJson);
         setNewPostAlert(post);
-        // Add the new post to the top of the list, avoiding duplicates
+        // Add the post to the main list if it's not already there from initial load
         setAllPosts(prevPosts => {
-            const postExists = prevPosts.some(p => p.slug === post.slug);
-            if (postExists) {
-                // If post exists, maybe it was updated. Replace it.
-                return [post, ...prevPosts.filter(p => p.slug !== post.slug)];
-            }
-            // If post is new, add it to the beginning.
+          if (!prevPosts.some(p => p.slug === post.slug)) {
+            // Also save it for the feed so it persists on reload
+            sessionStorage.setItem('newBlogPostForFeed', JSON.stringify(post));
             return [post, ...prevPosts];
+          }
+          return prevPosts;
         });
-        
-        // Clean up session storage so the alert doesn't show again on refresh
         sessionStorage.removeItem('newBlogPost');
       } catch (error) {
         console.error("Failed to parse new blog post from session storage", error);

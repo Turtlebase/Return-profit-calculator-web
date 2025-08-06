@@ -12,7 +12,7 @@ import { useEffect, useState } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
 
 export default function BlogPostPage({ params }: { params: { slug: string } }) {
-  const [post, setPost] = useState<BlogPost | null>(null);
+  const [post, setPost] = useState<BlogPost | null | undefined>(undefined);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -34,32 +34,16 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
       }
     }
 
-    if (foundPost) {
-      setPost(foundPost);
-      setIsLoading(false);
-    } else {
-      // If it's still not found after a small delay (to account for render timing), it's a 404
-      setTimeout(() => {
-          if (!post) {
-            const newPostJson = sessionStorage.getItem('newBlogPost');
-            if (newPostJson) {
-                try {
-                    const sessionPost = JSON.parse(newPostJson);
-                    if (sessionPost.slug === params.slug) {
-                        setPost(sessionPost);
-                        setIsLoading(false);
-                        return;
-                    }
-                } catch (error) {
-                    console.error("Failed to parse blog post from session storage", error);
-                }
-            }
-            setIsLoading(false);
-            notFound();
-          }
-      }, 500);
+    setPost(foundPost || null); // Set to found post or null if not found
+    setIsLoading(false);
+
+  }, [params.slug]);
+
+  useEffect(() => {
+    if (!isLoading && post === null) {
+      notFound();
     }
-  }, [params.slug, post]);
+  }, [isLoading, post]);
 
 
   const rtoFlowchartData = {
@@ -242,7 +226,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
   };
 
 
-  if (isLoading || !post) {
+  if (isLoading || post === undefined) {
     return (
         <div className="flex min-h-screen flex-col bg-background">
             <Header />
@@ -262,6 +246,10 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
             <Footer />
         </div>
     )
+  }
+
+  if (post === null) {
+      notFound();
   }
 
   return (
