@@ -11,18 +11,27 @@ import { Sparkles } from 'lucide-react';
 
 export default function BlogPage() {
   const [allPosts, setAllPosts] = useState<BlogPost[]>(initialBlogPosts);
-  const [newPost, setNewPost] = useState<BlogPost | null>(null);
+  const [newPostAlert, setNewPostAlert] = useState<BlogPost | null>(null);
 
   useEffect(() => {
-    // Check for a new post from the admin page
+    // Check for a new post from the admin page to show an alert
     const newPostJson = sessionStorage.getItem('newBlogPost');
     if (newPostJson) {
       try {
         const post = JSON.parse(newPostJson);
-        setNewPost(post);
+        setNewPostAlert(post);
         // Add the new post to the top of the list, avoiding duplicates
-        setAllPosts(prevPosts => [post, ...prevPosts.filter(p => p.slug !== post.slug)]);
-        // Clean up session storage
+        setAllPosts(prevPosts => {
+            const postExists = prevPosts.some(p => p.slug === post.slug);
+            if (postExists) {
+                // If post exists, maybe it was updated. Replace it.
+                return [post, ...prevPosts.filter(p => p.slug !== post.slug)];
+            }
+            // If post is new, add it to the beginning.
+            return [post, ...prevPosts];
+        });
+        
+        // Clean up session storage so the alert doesn't show again on refresh
         sessionStorage.removeItem('newBlogPost');
       } catch (error) {
         console.error("Failed to parse new blog post from session storage", error);
@@ -46,12 +55,12 @@ export default function BlogPage() {
               </p>
             </div>
             
-            {newPost && (
+            {newPostAlert && (
               <Alert className="mb-8 max-w-4xl mx-auto bg-primary/10 border-primary/20 animate-in fade-in-50">
                 <Sparkles className="h-4 w-4 text-primary" />
                 <AlertTitle className="text-primary">New Post Published!</AlertTitle>
                 <AlertDescription>
-                  Your AI-generated article "{newPost.title}" is now live.
+                  Your AI-generated article "{newPostAlert.title}" is now live.
                 </AlertDescription>
               </Alert>
             )}

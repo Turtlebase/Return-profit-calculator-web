@@ -59,7 +59,8 @@ export default function AdminPage() {
       // In a real app, this would be saved to a database.
       // For this demo, we'll pass it via session storage to the blog page.
       sessionStorage.setItem('newBlogPost', JSON.stringify(generatedPost));
-      router.push('/blog');
+      // Go to the new post's page after publishing
+      router.push(`/blog/${generatedPost.slug}`);
     }
   };
 

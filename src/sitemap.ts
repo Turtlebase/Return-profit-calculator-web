@@ -13,7 +13,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/privacy',
     '/admin'
   ].map((route) => ({
-    url: `${siteUrl}${route}`,
+    url: `${siteUrl}${route === '/' ? '' : route}`,
     lastModified: new Date(),
     priority: route === '/' ? 1 : (route === '/blog' ? 0.9 : 0.8),
   }));

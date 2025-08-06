@@ -36,12 +36,30 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
 
     if (foundPost) {
       setPost(foundPost);
+      setIsLoading(false);
     } else {
-        // If it's still not found, it's a 404
-        notFound();
+      // If it's still not found after a small delay (to account for render timing), it's a 404
+      setTimeout(() => {
+          if (!post) {
+            const newPostJson = sessionStorage.getItem('newBlogPost');
+            if (newPostJson) {
+                try {
+                    const sessionPost = JSON.parse(newPostJson);
+                    if (sessionPost.slug === params.slug) {
+                        setPost(sessionPost);
+                        setIsLoading(false);
+                        return;
+                    }
+                } catch (error) {
+                    console.error("Failed to parse blog post from session storage", error);
+                }
+            }
+            setIsLoading(false);
+            notFound();
+          }
+      }, 500);
     }
-    setIsLoading(false);
-  }, [params.slug]);
+  }, [params.slug, post]);
 
 
   const rtoFlowchartData = {
