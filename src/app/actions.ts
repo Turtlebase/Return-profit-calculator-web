@@ -35,6 +35,7 @@ export async function subscribeToNewsletter(email: string): Promise<{ success: b
     console.log(`Subscribing ${email} to the newsletter.`);
     
     // Simulate a successful subscription
+    await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate network delay
     return { success: true, message: "Thank you for subscribing!" };
   } catch (error) {
     if (error instanceof z.ZodError) {
