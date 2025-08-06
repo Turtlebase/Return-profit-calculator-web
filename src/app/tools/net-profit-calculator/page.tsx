@@ -2,7 +2,7 @@
 import { ReturnProfitCalculator } from '@/components/tools/return-profit-calculator';
 import Header from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import type { Metadata } from 'next';
 import {
   Accordion,
@@ -10,7 +10,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
-import { DollarSign, Package, Truck, CornerDownLeft, Percent, Wallet } from 'lucide-react';
+import { DollarSign, Package, Truck, CornerDownLeft, Percent, Wallet, MinusCircle, ArrowDown } from 'lucide-react';
 
 
 export const metadata: Metadata = {
@@ -25,34 +25,62 @@ const calculatorInputs = [
     {
         icon: DollarSign,
         title: 'Selling Price',
-        description: 'The final price the customer pays for your product.'
+        description: 'Revenue per sale'
     },
     {
         icon: Package,
-        title: 'Cost of Goods Sold (COGS)',
-        description: 'The direct cost of producing the product (materials, manufacturing).'
+        title: 'Cost of Goods (COGS)',
+        description: 'Manufacturing cost'
     },
     {
         icon: Truck,
-        title: 'Forward Shipping Cost',
-        description: 'The cost to ship the product to the customer.'
-    },
-    {
-        icon: CornerDownLeft,
-        title: 'Return & Reverse Shipping',
-        description: 'Combined cost to get a product back and restock it.'
+        title: 'Shipping Cost',
+        description: 'Forward & reverse'
     },
     {
         icon: Percent,
-        title: 'Payment Gateway Fee %',
-        description: 'The percentage your payment processor charges per transaction.'
+        title: 'Gateway Fees',
+        description: 'Transaction charges'
     },
     {
-        icon: Wallet,
-        title: 'Return Rate %',
-        description: 'The percentage of orders that are returned by customers.'
+        icon: CornerDownLeft,
+        title: 'Return Loss',
+        description: 'Impact of RTO %'
     },
 ]
+
+
+const VisualProfitJourney = () => (
+    <div className="space-y-4">
+        {calculatorInputs.map((item, index) => (
+            <React.Fragment key={item.title}>
+                <div className="group flex items-center gap-4 transition-all duration-300">
+                    <div className="flex-shrink-0 bg-card border rounded-lg p-4 group-hover:bg-primary/10 group-hover:border-primary transition-all duration-300">
+                        <item.icon className="w-8 h-8 text-primary" />
+                    </div>
+                    <div className="flex-grow">
+                        <h4 className="font-bold text-lg">{item.title}</h4>
+                        <p className="text-sm text-muted-foreground">{item.description}</p>
+                    </div>
+                </div>
+                {index < calculatorInputs.length -1 && (
+                    <div className="flex items-center justify-center h-16 relative">
+                        <div className="absolute w-px h-full bg-border left-1/2 transform -translate-x-1/2"></div>
+                        <MinusCircle className="w-8 h-8 text-destructive/50 bg-background z-10" />
+                    </div>
+                )}
+            </React.Fragment>
+        ))}
+         <div className="flex items-center justify-center h-16 relative">
+            <div className="absolute w-px h-full bg-border left-1/2 transform -translate-x-1/2"></div>
+            <ArrowDown className="w-8 h-8 text-primary/80 bg-background z-10 animate-bounce" />
+        </div>
+         <div className="flex flex-col items-center text-center p-6 rounded-lg bg-gradient-to-br from-primary/20 to-green-400/20 border-2 border-green-400/80 shadow-2xl shadow-green-400/10">
+            <h3 className="text-2xl font-bold text-white">True Net Profit</h3>
+            <p className="text-green-300/80">The final profit in your bank per order.</p>
+        </div>
+    </div>
+);
 
 
 export default function NetProfitCalculatorPage() {
@@ -69,53 +97,39 @@ export default function NetProfitCalculatorPage() {
               </p>
             </header>
 
-            <Card className="shadow-lg overflow-hidden">
-                <CardContent className="p-0">
-                    <ReturnProfitCalculator />
-                </CardContent>
-            </Card>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mt-16">
-              <div className="prose prose-lg dark:prose-invert max-w-none">
-                  <h2>Why True Net Profit Matters</h2>
-                  <p>Many D2C brands focus on metrics like Revenue and Return on Ad Spend (ROAS), but these numbers can be misleading. A high revenue figure doesn't guarantee a healthy business if your costs are out of control. The True Net Profit per order is the ultimate measure of your business's financial health and sustainability.</p>
-                  <blockquote>
-                      <p>Calculating your net profit reveals the real impact of hidden costs like returns, reverse shipping, and payment gateway fees, which can silently erode your margins.</p>
-                  </blockquote>
-              </div>
-              <div className="prose prose-lg dark:prose-invert max-w-none">
-                  <h2>How It Works</h2>
-                  <p>This tool gives you a clear, honest picture of your profitability. Here's a visual breakdown of the inputs:</p>
-                   <div className="grid grid-cols-2 md:grid-cols-3 gap-4 not-prose">
-                        {calculatorInputs.map((input) => (
-                            <div key={input.title} className="p-4 rounded-lg bg-card border flex flex-col items-center text-center">
-                                <input.icon className="w-8 h-8 text-primary mb-2" />
-                                <h4 className="font-semibold text-sm">{input.title}</h4>
-                            </div>
-                        ))}
-                   </div>
-              </div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start">
+                <div className="lg:col-span-1">
+                     <h2 className="text-3xl font-bold text-center mb-8">How It Works</h2>
+                     <VisualProfitJourney />
+                </div>
+                <div className="lg:col-span-1">
+                    <Card className="shadow-lg overflow-hidden sticky top-24">
+                        <CardContent className="p-0">
+                            <ReturnProfitCalculator />
+                        </CardContent>
+                    </Card>
+                </div>
             </div>
 
-            <div className="max-w-4xl mx-auto mt-16">
+            <div className="max-w-4xl mx-auto mt-24">
                  <h2 className="text-3xl font-bold text-center mb-8">Frequently Asked Questions</h2>
                  <Accordion type="single" collapsible className="w-full">
                     <AccordionItem value="item-1">
                         <AccordionTrigger>How can I reduce my return rate?</AccordionTrigger>
                         <AccordionContent>
-                        Focus on clear product descriptions, high-quality images, and customer reviews. Proactive communication and a simple, fair return policy can also help.
+                        Focus on clear product descriptions, high-quality images, and customer reviews. Proactive communication and a simple, fair return policy can also help. For high-risk COD orders, consider phone call verification before shipping.
                         </AccordionContent>
                     </AccordionItem>
                     <AccordionItem value="item-2">
-                        <AccordionTrigger>Is this calculator suitable for all e-commerce businesses?</AccordionTrigger>
+                        <AccordionTrigger>Why is my Break-Even Return Rate so important?</AccordionTrigger>
                         <AccordionContent>
-                        Yes, this calculator is designed for any D2C or e-commerce business that ships physical products and deals with returns. It's particularly useful for brands in the Indian market where Cash on Delivery (COD) can lead to higher return rates.
+                        This is your danger zone threshold. If your actual return rate climbs above your break-even rate, you are officially losing money on an average order basis. It's a critical health metric for your business that signals when you need to urgently address profitability issues.
                         </AccordionContent>
                     </AccordionItem>
                     <AccordionItem value="item-3">
-                        <AccordionTrigger>Why is my Break-Even Return Rate so low?</AccordionTrigger>
+                        <AccordionTrigger>What are the biggest hidden costs I should watch out for?</AccordionTrigger>
                         <AccordionContent>
-                        A low break-even rate is usually a sign of thin profit margins. This means each return has a significant negative impact. To improve this, look at increasing your prices, reducing your COGS, or negotiating better shipping rates.
+                        The biggest hidden costs are almost always related to returns. It's not just the reverse shipping fee. You also lose the original forward shipping cost, incur restocking labor costs, and sometimes the product is damaged and cannot be resold. This calculator helps model that combined negative impact.
                         </AccordionContent>
                     </AccordionItem>
                  </Accordion>
