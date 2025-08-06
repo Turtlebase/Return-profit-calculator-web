@@ -98,18 +98,17 @@ export default function NetProfitCalculatorPage() {
               </p>
             </header>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start">
-                <div className="lg:col-span-1">
-                     <h2 className="text-3xl font-bold text-center mb-8">How It Works</h2>
-                     <VisualProfitJourney />
-                </div>
-                <div className="lg:col-span-1">
-                    <Card className="shadow-lg overflow-hidden sticky top-24">
-                        <CardContent className="p-0">
-                            <ReturnProfitCalculator />
-                        </CardContent>
-                    </Card>
-                </div>
+             <div className="max-w-5xl mx-auto">
+                <Card className="shadow-lg overflow-hidden">
+                    <CardContent className="p-0">
+                        <ReturnProfitCalculator />
+                    </CardContent>
+                </Card>
+            </div>
+
+            <div className="max-w-2xl mx-auto mt-24">
+                 <h2 className="text-3xl font-bold text-center mb-8">How It Works</h2>
+                 <VisualProfitJourney />
             </div>
 
             <div className="max-w-4xl mx-auto mt-24">
