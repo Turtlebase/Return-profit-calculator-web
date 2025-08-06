@@ -40,15 +40,6 @@ export default function CLVCalculatorPage() {
             </Card>
 
             <div className="max-w-4xl mx-auto mt-24">
-                 <div className="text-center">
-                    <h2 className="text-3xl font-bold">Why CLV is a Critical Metric</h2>
-                    <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
-                        Knowing your CLV helps you determine how much you can afford to spend to acquire a new customer (your Customer Acquisition Cost, or CAC) while remaining profitable.
-                    </p>
-                 </div>
-            </div>
-
-            <div className="max-w-4xl mx-auto mt-16">
                  <h2 className="text-3xl font-bold text-center mb-8">Frequently Asked Questions</h2>
                  <Accordion type="single" collapsible className="w-full">
                     <AccordionItem value="item-1">

@@ -39,15 +39,6 @@ export default function RTOLossAnalyzerPage() {
             </Card>
 
             <div className="max-w-4xl mx-auto mt-24">
-                 <div className="text-center">
-                    <h2 className="text-3xl font-bold">Unlock the Power of Your Data</h2>
-                    <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
-                        By analyzing patterns in your past RTOs, you can build a proactive strategy to reduce them, saving you money on shipping, operations, and blocked inventory.
-                    </p>
-                 </div>
-            </div>
-
-            <div className="max-w-4xl mx-auto mt-16">
                  <h2 className="text-3xl font-bold text-center mb-8">Frequently Asked Questions</h2>
                  <Accordion type="single" collapsible className="w-full">
                     <AccordionItem value="item-1">

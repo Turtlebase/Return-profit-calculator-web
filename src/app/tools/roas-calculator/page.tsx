@@ -39,17 +39,8 @@ export default function ROASCalculatorPage() {
                     </CardContent>
                 </Card>
             </div>
-
-            <div className="max-w-4xl mx-auto mt-24">
-                 <div className="text-center">
-                    <h2 className="text-3xl font-bold">Understanding Your Results</h2>
-                    <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
-                        This tool breaks down your advertising profitability into three core metrics. Here's what they mean for your business.
-                    </p>
-                 </div>
-            </div>
             
-            <div className="max-w-4xl mx-auto mt-16">
+            <div className="max-w-4xl mx-auto mt-24">
                  <h2 className="text-3xl font-bold text-center mb-8">Frequently Asked Questions</h2>
                  <Accordion type="single" collapsible className="w-full">
                     <AccordionItem value="item-1">
