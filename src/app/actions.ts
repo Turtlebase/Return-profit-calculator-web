@@ -31,26 +31,51 @@ const emailSchema = z.string().email({ message: "Please enter a valid email addr
 export async function subscribeToNewsletter(email: string): Promise<{ success: boolean, message: string }> {
   try {
     emailSchema.parse(email);
-    // In a real app, you'd integrate with an email service like Mailchimp or ConvertKit here.
-    console.log(`Subscribing ${email} to the newsletter.`);
     
-    // Simulate a successful subscription
-    await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate network delay
+    const MAILBLUSTER_API_KEY = process.env.MAILBLUSTER_API_KEY;
+
+    if (!MAILBLUSTER_API_KEY) {
+      console.error("MailBluster API key is not configured.");
+      return { success: false, message: "Newsletter service is not configured." };
+    }
+
+    const response = await fetch('https://api.mailbluster.com/api/leads', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': MAILBLUSTER_API_KEY
+        },
+        body: JSON.stringify({
+            email: email,
+            subscribed: true,
+            addTags: ['Website Signup']
+        })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok || data.message !== 'Lead created') {
+        console.error("MailBluster API Error:", data.message);
+        // Provide a user-friendly error message
+        const errorMessage = data.errors?.email?.[0] || "Could not subscribe. Please try again later.";
+        return { success: false, message: errorMessage };
+    }
+
     return { success: true, message: "Thank you for subscribing!" };
+
   } catch (error) {
     if (error instanceof z.ZodError) {
       return { success: false, message: error.errors[0].message };
     }
     console.error("Newsletter Subscription Error:", error);
-    return { success: false, message: "Something went wrong. Please try again." };
+    return { success: false, message: "An unexpected error occurred. Please try again." };
   }
 }
+
 
 export async function generateBlogPost(title: GenerateBlogPostInput): Promise<GenerateBlogPostOutput> {
     try {
         const result = await generateBlogPostFlow(title);
-        // The result.content is already a string, but if it contained complex HTML,
-        // it might need sanitization in a real app before being rendered.
         return result;
     } catch (error) {
         console.error("Error in Blog Post Generation:", error);
