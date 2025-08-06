@@ -65,6 +65,9 @@ export default function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
+            <Button asChild variant="ghost" className="hidden md:inline-flex">
+               <Link href="/admin">Admin</Link>
+            </Button>
             <div className="md:hidden">
             <Sheet>
                 <SheetTrigger asChild>

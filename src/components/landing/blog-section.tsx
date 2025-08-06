@@ -6,6 +6,7 @@ import Link from "next/link";
 
 
 export default function BlogSection() {
+  const topPosts = blogPosts.slice(0, 3);
   return (
     <section id="blog" className="py-24 sm:py-32 bg-card">
       <div className="container">
@@ -16,7 +17,7 @@ export default function BlogSection() {
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {blogPosts.map((post) => (
+          {topPosts.map((post) => (
             <BlogCard key={post.slug} post={post} />
           ))}
         </div>
