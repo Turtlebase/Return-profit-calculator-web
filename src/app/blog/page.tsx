@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -7,18 +8,6 @@ import Footer from '@/components/layout/footer';
 import Header from '@/components/layout/header';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Sparkles } from 'lucide-react';
-import type { Metadata } from 'next';
-
-// Note: This metadata is for client components and may not be picked up by crawlers.
-// For full SEO, this page could be refactored to a server component if needed.
-export const metadata: Metadata = {
-  title: 'D2C Insights Blog | Returnprofit.online',
-  description: 'Actionable insights, tips, and strategies from D2C experts to help you reduce RTO, improve profitability, and scale your e-commerce brand in India.',
-  alternates: {
-    canonical: '/blog',
-  },
-};
-
 
 export default function BlogPage() {
   const [allPosts, setAllPosts] = useState<BlogPost[]>(() => {
