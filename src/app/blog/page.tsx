@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -8,24 +7,34 @@ import Footer from '@/components/layout/footer';
 import Header from '@/components/layout/header';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Sparkles } from 'lucide-react';
+import type { Metadata } from 'next';
+
+// Note: This metadata is for client components and may not be picked up by crawlers.
+// For full SEO, this page could be refactored to a server component if needed.
+export const metadata: Metadata = {
+  title: 'D2C Insights Blog | Returnprofit.online',
+  description: 'Actionable insights, tips, and strategies from D2C experts to help you reduce RTO, improve profitability, and scale your e-commerce brand in India.',
+  alternates: {
+    canonical: '/blog',
+  },
+};
+
 
 export default function BlogPage() {
   const [allPosts, setAllPosts] = useState<BlogPost[]>(() => {
-    // Initialize with static posts
     const posts = [...initialBlogPosts];
-    // Check for a session-stored post on initial load
-    const newPostJson = typeof window !== 'undefined' ? sessionStorage.getItem('newBlogPostForFeed') : null;
-    if (newPostJson) {
-      try {
-        const post = JSON.parse(newPostJson);
-        // Add to list if not already present
-        if (!posts.some(p => p.slug === post.slug)) {
-          posts.unshift(post);
+    if (typeof window !== 'undefined') {
+        const newPostJson = sessionStorage.getItem('newBlogPostForFeed');
+        if (newPostJson) {
+            try {
+                const post = JSON.parse(newPostJson);
+                if (!posts.some(p => p.slug === post.slug)) {
+                    posts.unshift(post);
+                }
+            } catch (error) {
+                console.error("Failed to parse new blog post from session storage", error);
+            }
         }
-        sessionStorage.removeItem('newBlogPostForFeed');
-      } catch (error) {
-        console.error("Failed to parse new blog post from session storage", error);
-      }
     }
     return posts;
   });
@@ -39,10 +48,9 @@ export default function BlogPage() {
       try {
         const post = JSON.parse(newPostJson);
         setNewPostAlert(post);
-        // Add the post to the main list if it's not already there from initial load
+        // Add the post to the main list if it's not already there
         setAllPosts(prevPosts => {
           if (!prevPosts.some(p => p.slug === post.slug)) {
-            // Also save it for the feed so it persists on reload
             sessionStorage.setItem('newBlogPostForFeed', JSON.stringify(post));
             return [post, ...prevPosts];
           }

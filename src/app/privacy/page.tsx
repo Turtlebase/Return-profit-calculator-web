@@ -1,12 +1,18 @@
-
 import Header from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-    title: 'Privacy Policy',
+    title: 'Privacy Policy | Returnprofit.online',
     description: 'Learn how Returnprofit.online collects, uses, and protects your data. We are committed to transparency and your privacy.',
-  }
+    alternates: {
+      canonical: '/privacy',
+    },
+    robots: {
+      index: false, // No need to index privacy policy usually
+      follow: true,
+    }
+}
 
 export default function PrivacyPage() {
   return (

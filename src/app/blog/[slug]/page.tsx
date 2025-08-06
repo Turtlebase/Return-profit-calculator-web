@@ -1,6 +1,5 @@
-
 'use client';
-import { notFound, useRouter } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import { blogPosts as staticBlogPosts, type BlogPost } from '@/lib/blog-data';
 import Header from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
@@ -10,18 +9,60 @@ import { RtoReductionChart } from '@/components/blog/rto-reduction-chart';
 import { Flowchart } from '@/components/blog/flowchart';
 import { useEffect, useState } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
+import Head from 'next/head';
+
+// This function would ideally be used with generateStaticParams if we weren't also
+// handling client-side generated posts. For now, it helps define metadata.
+export async function generateMetadata({ params }: { params: { slug: string } }) {
+  const post = staticBlogPosts.find((p) => p.slug === params.slug);
+
+  if (!post) {
+    return {
+      title: 'Blog Post | Returnprofit.online',
+      description: 'An insightful article from the Returnprofit.online blog.',
+    };
+  }
+
+  return {
+    title: `${post.title} | Returnprofit.online`,
+    description: post.description,
+    alternates: {
+      canonical: `/blog/${post.slug}`,
+    },
+    openGraph: {
+        title: post.title,
+        description: post.description,
+        url: `https://returnprofit.online/blog/${post.slug}`,
+        images: [
+            {
+                url: post.image,
+                width: 1200,
+                height: 600,
+                alt: post.title,
+            },
+        ],
+        type: 'article',
+        publishedTime: new Date().toISOString(), // In a real app, this would be the post's publish date
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: post.title,
+        description: post.description,
+        images: [post.image],
+    },
+  };
+}
+
 
 export default function BlogPostPage({ params }: { params: { slug: string } }) {
   const [post, setPost] = useState<BlogPost | null | undefined>(undefined);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Try to find the post in the static list first
     let foundPost = staticBlogPosts.find((p) => p.slug === params.slug);
     
-    // If not found, check session storage for a newly generated post
     if (!foundPost) {
-      const newPostJson = sessionStorage.getItem('newBlogPost');
+      const newPostJson = sessionStorage.getItem('newBlogPostForFeed');
       if (newPostJson) {
         try {
           const sessionPost = JSON.parse(newPostJson);
@@ -34,8 +75,16 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
       }
     }
 
-    setPost(foundPost || null); // Set to found post or null if not found
+    setPost(foundPost || null);
     setIsLoading(false);
+
+    // Clean up the 'newBlogPost' key after viewing it once
+    if (foundPost) {
+        const newPostFlag = sessionStorage.getItem('newBlogPost');
+        if(newPostFlag && JSON.parse(newPostFlag)?.slug === params.slug) {
+            sessionStorage.removeItem('newBlogPost');
+        }
+    }
 
   }, [params.slug]);
 
@@ -254,6 +303,20 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
+      <Head>
+        <title>{`${post.title} | Returnprofit.online`}</title>
+        <meta name="description" content={post.description} />
+        <link rel="canonical" href={`https://returnprofit.online/blog/${post.slug}`} />
+        <meta property="og:title" content={post.title} />
+        <meta property="og:description" content={post.description} />
+        <meta property="og:url" content={`https://returnprofit.online/blog/${post.slug}`} />
+        <meta property="og:image" content={post.image} />
+        <meta property="og:type" content="article" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={post.title} />
+        <meta name="twitter:description" content={post.description} />
+        <meta name="twitter:image" content={post.image} />
+      </Head>
       <Header />
       <main className="flex-1">
         <article className="container max-w-4xl py-12 md:py-24">
@@ -276,6 +339,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
             height={600}
             className="w-full rounded-lg object-cover mb-12 border shadow-lg"
             data-ai-hint={post.dataAiHint}
+            priority // Prioritize loading the main blog image
           />
           
           <div className="prose prose-lg dark:prose-invert max-w-none mx-auto">

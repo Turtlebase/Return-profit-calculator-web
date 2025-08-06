@@ -44,6 +44,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.9,
   }));
 
+  // Note: Dynamically generated posts from the admin panel are not included
+  // as they are stored in session storage and not available at build time.
+  // A database would be needed for them to be included in the sitemap.
+
   return [
     ...staticPages,
     ...blogPageSitemap,

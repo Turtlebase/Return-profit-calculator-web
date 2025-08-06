@@ -1,4 +1,3 @@
-
 import Header from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
 import { Mail, Phone, MapPin } from 'lucide-react';
@@ -9,8 +8,11 @@ import { Label } from '@/components/ui/label';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Contact Us',
+  title: 'Contact Us | Returnprofit.online',
   description: 'Get in touch with the Returnprofit.online team. We are here to answer your questions about our D2C profitability tools.',
+  alternates: {
+    canonical: '/contact',
+  },
 }
 
 export default function ContactPage() {

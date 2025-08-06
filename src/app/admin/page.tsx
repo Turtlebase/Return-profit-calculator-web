@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState } from 'react';
@@ -17,6 +16,16 @@ import { Loader2, Sparkles, Image as ImageIcon, BookOpen } from 'lucide-react';
 import { generateBlogPost, type GenerateBlogPostOutput } from '@/app/actions';
 import Image from 'next/image';
 import { useToast } from '@/hooks/use-toast';
+import type { Metadata } from 'next';
+
+// This metadata is for client components and may not be picked up by crawlers.
+export const metadata: Metadata = {
+  title: 'Admin: AI Blog Post Generator',
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 const formSchema = z.object({
   title: z.string().min(10, 'Please enter a title of at least 10 characters.'),
@@ -56,12 +65,10 @@ export default function AdminPage() {
 
   const handlePublish = () => {
     if (generatedPost) {
-      // In a real app, this would be saved to a database.
-      // For this demo, we'll pass it via session storage to the blog page.
       // We use two separate keys: one for the individual page, one for the feed page.
+      // This helps manage state between page navigations.
       sessionStorage.setItem('newBlogPost', JSON.stringify(generatedPost));
       sessionStorage.setItem('newBlogPostForFeed', JSON.stringify(generatedPost));
-      // Go to the new post's page after publishing
       router.push(`/blog/${generatedPost.slug}`);
     }
   };
