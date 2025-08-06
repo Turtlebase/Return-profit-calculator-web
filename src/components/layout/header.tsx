@@ -5,11 +5,9 @@ import { useState } from "react";
 import Link from "next/link";
 import { Menu, BotMessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetClose } from "@/components/ui/sheet";
 
 export default function Header() {
-  const [isOpen, setIsOpen] = useState(false);
-
   const navLinks = [
     { name: "Tools", href: "/#tools" },
     { name: "About", href: "/about" },
@@ -43,7 +41,7 @@ export default function Header() {
         </div>
 
         <div className="md:hidden">
-          <Sheet open={isOpen} onOpenChange={setIsOpen}>
+          <Sheet>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon">
                 <Menu className="h-6 w-6" />
@@ -54,26 +52,32 @@ export default function Header() {
                <SheetTitle className="sr-only">Mobile Menu</SheetTitle>
               <div className="flex flex-col h-full">
                 <div className="flex items-center justify-between p-4 border-b">
-                   <Link href="/" className="flex items-center gap-2" onClick={() => setIsOpen(false)}>
-                      <BotMessageSquare className="h-6 w-6 text-primary" />
+                   <Link href="/" className="flex items-center gap-2">
+                     <SheetClose asChild>
+                        <BotMessageSquare className="h-6 w-6 text-primary" />
+                     </SheetClose>
                       <span className="font-bold">Returnprofit.online</span>
                    </Link>
                 </div>
                 <nav className="flex flex-col gap-4 p-4">
                   {navLinks.map((link) => (
-                    <Link
-                      key={link.name}
-                      href={link.href}
-                      className="text-lg font-medium"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      {link.name}
-                    </Link>
+                     <SheetClose asChild key={link.name}>
+                        <Link
+                          href={link.href}
+                          className="text-lg font-medium"
+                        >
+                          {link.name}
+                        </Link>
+                     </SheetClose>
                   ))}
                 </nav>
                 <div className="mt-auto p-4 border-t flex flex-col gap-2">
-                    <Button variant="ghost">Login</Button>
-                    <Button>Get Report</Button>
+                   <SheetClose asChild>
+                      <Button variant="ghost">Login</Button>
+                   </SheetClose>
+                   <SheetClose asChild>
+                      <Button>Get Report</Button>
+                   </SheetClose>
                 </div>
               </div>
             </SheetContent>
