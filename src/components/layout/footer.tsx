@@ -3,12 +3,16 @@ import Link from 'next/link';
 import { BotMessageSquare, Twitter, Linkedin, Instagram } from 'lucide-react';
 
 export default function Footer() {
-  const footerLinks = [
-    { name: 'About', href: '/about' },
+  const mainLinks = [
     { name: 'Tools', href: '/#tools' },
     { name: 'Blog', href: '/blog' },
-    { name: 'Privacy Policy', href: '/privacy' },
-    { name: 'Contact Us', href: '/contact' },
+  ];
+  
+  const legalLinks = [
+    { name: 'About', href: '/about' },
+    { name: 'Contact', href: '/contact' },
+    { name: 'Privacy', href: '/privacy' },
+    { name: 'Terms of Use', href: '/terms' },
   ];
 
   const socialLinks = [
@@ -27,12 +31,20 @@ export default function Footer() {
               <span className="text-xl font-bold">Returnprofit.online</span>
             </Link>
             <p className="text-sm text-muted-foreground">Smarter D2C Starts Here.</p>
+             <div className="flex space-x-4 mt-4">
+                {socialLinks.map((social) => (
+                    <Link key={social.name} href={social.href} className="text-muted-foreground hover:text-foreground">
+                        <social.icon className="h-5 w-5" />
+                        <span className="sr-only">{social.name}</span>
+                    </Link>
+                ))}
+            </div>
           </div>
           <div className="col-span-1 md:col-span-3 grid grid-cols-2 md:grid-cols-4 gap-8">
              <div>
                 <h3 className="font-semibold mb-4">Platform</h3>
                 <ul className="space-y-2">
-                  {footerLinks.slice(0,3).map((link) => (
+                  {mainLinks.map((link) => (
                     <li key={link.name}>
                       <Link href={link.href} className="text-sm text-muted-foreground hover:text-foreground">
                         {link.name}
@@ -42,9 +54,9 @@ export default function Footer() {
                 </ul>
              </div>
               <div>
-                <h3 className="font-semibold mb-4">Legal</h3>
+                <h3 className="font-semibold mb-4">Info</h3>
                 <ul className="space-y-2">
-                  {footerLinks.slice(3,5).map((link) => (
+                  {legalLinks.map((link) => (
                     <li key={link.name}>
                       <Link href={link.href} className="text-sm text-muted-foreground hover:text-foreground">
                         {link.name}
@@ -52,17 +64,6 @@ export default function Footer() {
                     </li>
                   ))}
                 </ul>
-             </div>
-             <div>
-                <h3 className="font-semibold mb-4">Socials</h3>
-                <div className="flex space-x-4">
-                    {socialLinks.map((social) => (
-                        <Link key={social.name} href={social.href} className="text-muted-foreground hover:text-foreground">
-                            <social.icon className="h-5 w-5" />
-                            <span className="sr-only">{social.name}</span>
-                        </Link>
-                    ))}
-                </div>
              </div>
           </div>
         </div>

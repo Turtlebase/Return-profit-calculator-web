@@ -3,18 +3,31 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Menu, BotMessageSquare, Wrench, Contact, Info, BookText, Shield } from "lucide-react";
+import { Menu, BotMessageSquare, Wrench, Info, BookText, Shield, ChevronDown, Contact, FileText, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetClose } from "@/components/ui/sheet";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+
 
 export default function Header() {
-  const navLinks = [
+  const mainNavLinks = [
     { name: "Tools", href: "/#tools", icon: Wrench },
-    { name: "About", href: "/about", icon: Info },
     { name: "Blog", href: "/blog", icon: BookText },
-    { name: "Contact", href: "/contact", icon: Contact },
-    { name: "Admin", href: "/admin", icon: Shield },
   ];
+
+  const infoNavLinks = [
+    { name: "About", href: "/about", icon: Info },
+    { name: "Contact", href: "/contact", icon: Contact },
+    { name: "Privacy", href: "/privacy", icon: Lock },
+    { name: "Terms of Use", href: "/terms", icon: FileText },
+  ]
+
+  const mobileNavLinks = [...mainNavLinks, ...infoNavLinks, { name: "Admin", href: "/admin", icon: Shield }];
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur-sm supports-[backdrop-filter]:bg-background/60">
@@ -25,7 +38,7 @@ export default function Header() {
         </Link>
 
         <nav className="hidden md:flex items-center gap-6">
-          {navLinks.map((link) => (
+          {mainNavLinks.map((link) => (
             <Link
               key={link.name}
               href={link.href}
@@ -34,6 +47,21 @@ export default function Header() {
               {link.name}
             </Link>
           ))}
+            <DropdownMenu>
+                <DropdownMenuTrigger className="flex items-center gap-1 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground focus:outline-none">
+                    Info <ChevronDown className="h-4 w-4" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                    {infoNavLinks.map((link) => (
+                         <DropdownMenuItem key={link.name} asChild>
+                            <Link href={link.href} className="flex items-center gap-2">
+                                <link.icon className="h-4 w-4" />
+                                {link.name}
+                            </Link>
+                         </DropdownMenuItem>
+                    ))}
+                </DropdownMenuContent>
+            </DropdownMenu>
         </nav>
 
         <div className="flex items-center gap-2">
@@ -55,7 +83,7 @@ export default function Header() {
                        </Link>
                     </div>
                     <nav className="flex flex-col gap-1 p-4">
-                      {navLinks.map((link) => (
+                      {mobileNavLinks.map((link) => (
                          <SheetClose asChild key={link.name}>
                             <Link
                               href={link.href}
