@@ -1,8 +1,14 @@
 import { CODRiskEvaluator } from '@/components/tools/cod-risk-evaluator';
 import Header from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import type { Metadata } from 'next';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
 
 export const metadata: Metadata = {
   title: 'AI COD Order Risk Evaluator for Indian D2C',
@@ -32,49 +38,37 @@ export default function CODRiskEvaluatorPage() {
                 </CardContent>
             </Card>
 
-            <div className="prose prose-lg dark:prose-invert max-w-none mx-auto mt-16">
-                <h2>The Challenge of Cash on Delivery in India</h2>
-                <p>Cash on Delivery (COD) is a double-edged sword for D2C brands in India. While it's essential for reaching a wider audience, it's also the primary driver of Return to Origin (RTO) losses. Fraudulent orders, casual buyers, and delivery issues can lead to a significant financial drain on your business.</p>
-                <blockquote>
-                    <p>Manually vetting every single COD order is impossible at scale. This AI tool acts as an intelligent risk analyst, helping you identify high-risk orders before you ship them.</p>
-                </blockquote>
-                
-                <h2>How Our AI Analyzes Risk</h2>
-                <p>Our tool uses a model trained on e-commerce best practices to assess the risk of an RTO. You provide four key data points:</p>
-                <ul>
-                    <li><strong>Order Value:</strong> Higher value orders often carry a higher risk if they are returned.</li>
-                    <li><strong>Customer History:</strong> The model analyzes whether the customer is new, a loyal repeat buyer, or has a history of returns.</li>
-                    <li><strong>Shipping Address:</strong> Certain pincodes and regions historically have higher RTO rates. The AI considers this geographical risk.</li>
-                    <li><strong>Product Category:</strong> Categories like high-fashion or electronics can sometimes have higher return rates than other categories.</li>
-                </ul>
+            <div className="max-w-4xl mx-auto mt-24">
+                 <div className="text-center">
+                    <h2 className="text-3xl font-bold">How Our AI Analyzes Risk</h2>
+                    <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
+                        Our AI model acts as an intelligent risk analyst, helping you identify high-risk orders before you ship them by analyzing key data points.
+                    </p>
+                 </div>
+            </div>
 
-                <h2>Making Smarter Shipping Decisions</h2>
-                <p>Based on your input, the AI provides a clear, actionable risk assessment:</p>
-                <ol>
-                    <li><strong>Risk Level (Low, Medium, High):</strong> A quick, color-coded assessment of the order's risk profile.</li>
-                    <li><strong>Risk Score (0-100):</strong> A granular score for a more detailed understanding of the risk level.</li>
-                    <li><strong>Recommendation:</strong> A plain-English suggestion, such as "Approve COD," "Request partial prepayment," or "Convert to prepaid."</li>
-                    <li><strong>Contributing Factors:</strong> The tool lists the specific reasons behind its assessment, giving you transparency into its decision-making process.</li>
-                </ol>
-
-                <h2>Frequently Asked Questions (FAQ)</h2>
-                <Card className="bg-card mt-6">
-                    <CardHeader><CardTitle className="text-xl">FAQ</CardTitle></CardHeader>
-                    <CardContent className="space-y-4">
-                        <div>
-                            <h4 className="font-semibold">Is the AI always correct?</h4>
-                            <p className="text-sm text-muted-foreground">The AI provides a highly educated recommendation based on the data provided, but it is not a guarantee. It should be used as a decision-support tool to augment your own business logic and fulfillment processes.</p>
-                        </div>
-                        <div>
-                            <h4 className="font-semibold">How can I get even more accurate results?</h4>
-                            <p className="text-sm text-muted-foreground">The quality of your input determines the quality of the output. Be as specific as possible in the 'Customer History' and 'Shipping Address' fields for the most accurate analysis.</p>
-                        </div>
-                         <div>
-                            <h4 className="font-semibold">What should I do for a 'High Risk' order?</h4>
-                            <p className="text-sm text-muted-foreground">For high-risk orders, it's often best to contact the customer via WhatsApp or phone call to confirm their intent to receive the order. You can also offer a small discount to convert their order to a prepaid method.</p>
-                        </div>
-                    </CardContent>
-                </Card>
+            <div className="max-w-4xl mx-auto mt-16">
+                 <h2 className="text-3xl font-bold text-center mb-8">Frequently Asked Questions</h2>
+                 <Accordion type="single" collapsible className="w-full">
+                    <AccordionItem value="item-1">
+                        <AccordionTrigger>Is the AI always correct?</AccordionTrigger>
+                        <AccordionContent>
+                        The AI provides a highly educated recommendation based on the data provided, but it is not a guarantee. It should be used as a decision-support tool to augment your own business logic and fulfillment processes.
+                        </AccordionContent>
+                    </AccordionItem>
+                    <AccordionItem value="item-2">
+                        <AccordionTrigger>How can I get even more accurate results?</AccordionTrigger>
+                        <AccordionContent>
+                        The quality of your input determines the quality of the output. Be as specific as possible in the 'Customer History' and 'Shipping Address' fields for the most accurate analysis.
+                        </AccordionContent>
+                    </AccordionItem>
+                    <AccordionItem value="item-3">
+                        <AccordionTrigger>What should I do for a 'High Risk' order?</AccordionTrigger>
+                        <AccordionContent>
+                        For high-risk orders, it's often best to contact the customer via WhatsApp or phone call to confirm their intent to receive the order. You can also offer a small discount to convert their order to a prepaid method.
+                        </AccordionContent>
+                    </AccordionItem>
+                 </Accordion>
             </div>
           </div>
         </section>

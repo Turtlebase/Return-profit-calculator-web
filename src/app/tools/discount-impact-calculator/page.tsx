@@ -1,8 +1,14 @@
 import { DiscountImpactCalculator } from '@/components/tools/discount-impact-calculator';
 import Header from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import type { Metadata } from 'next';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
 
 export const metadata: Metadata = {
   title: 'Discount Profit Margin Calculator',
@@ -32,48 +38,37 @@ export default function DiscountImpactCalculatorPage() {
                 </CardContent>
             </Card>
 
-            <div className="prose prose-lg dark:prose-invert max-w-none mx-auto mt-16">
-                <h2>The Hidden Costs of Discounts</h2>
-                <p>Discounts are a powerful tool for driving sales, but they can be a dangerous double-edged sword. A simple "10% Off" promotion can have a much larger impact on your net profit than you might think. This calculator is designed to reveal the true financial impact of your promotions.</p>
-                <blockquote>
-                    <p>Before launching a sale, it's crucial to model how the discount will affect your profit per sale. This allows you to set strategic discount rates that drive volume without destroying your profitability.</p>
-                </blockquote>
-                
-                <h2>How to Use This Calculator</h2>
-                <p>Provide three simple inputs to see the full picture:</p>
-                <ul>
-                    <li><strong>Original Price:</strong> The normal selling price of your product before any discount is applied.</li>
-                    <li><strong>Cost of Goods Sold (COGS):</strong> The direct cost to produce or acquire one unit of the product.</li>
-                    <li><strong>Discount %:</strong> The percentage discount you are planning to offer to the customer.</li>
-                </ul>
+            <div className="max-w-4xl mx-auto mt-24">
+                 <div className="text-center">
+                    <h2 className="text-3xl font-bold">The Hidden Costs of Discounts</h2>
+                    <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
+                        A simple "10% Off" promotion can have a much larger impact on your net profit than you might think. This calculator is designed to reveal the true financial impact of your promotions.
+                    </p>
+                 </div>
+            </div>
 
-                <h2>Understanding the Impact Analysis</h2>
-                <p>The tool instantly calculates four key metrics:</p>
-                <ol>
-                    <li><strong>Discounted Price:</strong> The final price the customer pays after the discount.</li>
-                    <li><strong>Profit per Sale:</strong> The absolute amount of profit (in ₹) you make on each discounted sale.</li>
-                    <li><strong>Profit Margin:</strong> The percentage of the discounted price that is actual profit. This is a critical indicator of profitability.</li>
-                    <li><strong>Change in Profit:</strong> This shows you how much your profit per sale has decreased (as a percentage) compared to a full-price sale. This number is often surprisingly high and is a powerful motivator to be strategic with discounts.</li>
-                </ol>
-
-                <h2>Frequently Asked Questions (FAQ)</h2>
-                <Card className="bg-card mt-6">
-                    <CardHeader><CardTitle className="text-xl">FAQ</CardTitle></CardHeader>
-                    <CardContent className="space-y-4">
-                        <div>
-                            <h4 className="font-semibold">Should I ever run a sale if my profit becomes negative?</h4>
-                            <p className="text-sm text-muted-foreground">Sometimes, yes. A "loss leader" strategy can be effective for customer acquisition, where you intentionally lose money on a product to acquire a new customer who you believe will have a high lifetime value (CLV). Use this strategy sparingly and track your numbers carefully.</p>
-                        </div>
-                        <div>
-                            <h4 className="font-semibold">Does this calculator account for increased sales volume?</h4>
-                            <p className="text-sm text-muted-foreground">This calculator focuses on the impact on your profit margin per unit. It does not forecast the potential increase in sales volume. You should use this tool to understand the margin trade-off and then estimate the sales lift required to make the promotion worthwhile.</p>
-                        </div>
-                         <div>
-                            <h4 className="font-semibold">What's a healthy profit margin to maintain during a sale?</h4>
-                            <p className="text-sm text-muted-foreground">This depends heavily on your industry, business model, and overall financial goals. However, you should always ensure your margin is high enough to cover all other operating costs (salaries, rent, etc.) not included in the COGS. Never discount so heavily that you can't cover your fundamental business costs.</p>
-                        </div>
-                    </CardContent>
-                </Card>
+            <div className="max-w-4xl mx-auto mt-16">
+                 <h2 className="text-3xl font-bold text-center mb-8">Frequently Asked Questions</h2>
+                 <Accordion type="single" collapsible className="w-full">
+                    <AccordionItem value="item-1">
+                        <AccordionTrigger>Should I ever run a sale if my profit becomes negative?</AccordionTrigger>
+                        <AccordionContent>
+                        Sometimes, yes. A "loss leader" strategy can be effective for customer acquisition, where you intentionally lose money on a product to acquire a new customer who you believe will have a high lifetime value (CLV). Use this strategy sparingly and track your numbers carefully.
+                        </AccordionContent>
+                    </AccordionItem>
+                    <AccordionItem value="item-2">
+                        <AccordionTrigger>Does this calculator account for increased sales volume?</AccordionTrigger>
+                        <AccordionContent>
+                        This calculator focuses on the impact on your profit margin per unit. It does not forecast the potential increase in sales volume. You should use this tool to understand the margin trade-off and then estimate the sales lift required to make the promotion worthwhile.
+                        </AccordionContent>
+                    </AccordionItem>
+                    <AccordionItem value="item-3">
+                        <AccordionTrigger>What's a healthy profit margin to maintain during a sale?</AccordionTrigger>
+                        <AccordionContent>
+                        This depends heavily on your industry, business model, and overall financial goals. However, you should always ensure your margin is high enough to cover all other operating costs (salaries, rent, etc.) not included in the COGS. Never discount so heavily that you can't cover your fundamental business costs.
+                        </AccordionContent>
+                    </AccordionItem>
+                 </Accordion>
             </div>
           </div>
         </section>

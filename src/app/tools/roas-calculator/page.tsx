@@ -1,8 +1,14 @@
 import { ROASCalculator } from '@/components/tools/roas-calculator';
 import Header from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import type { Metadata } from 'next';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
 
 export const metadata: Metadata = {
   title: 'Break-Even ROAS Calculator for D2C & E-commerce',
@@ -26,53 +32,45 @@ export default function ROASCalculatorPage() {
               </p>
             </header>
 
-            <Card className="shadow-lg">
-                <CardContent className="p-2 sm:p-4">
-                    <ROASCalculator />
-                </CardContent>
-            </Card>
-
-            <div className="prose prose-lg dark:prose-invert max-w-none mx-auto mt-16">
-                <h2>What is ROAS and Why is Break-Even ROAS Critical?</h2>
-                <p>Return On Ad Spend (ROAS) is a marketing metric that measures the amount of revenue your business earns for each dollar it spends on advertising. While a high ROAS might seem good, it doesn't tell the whole story. The only ROAS that truly matters is your <strong>Break-Even ROAS</strong>.</p>
-                <blockquote>
-                    <p>Your Break-Even ROAS is the point where your revenue from ads exactly covers your ad spend plus the cost of the goods sold. Anything above this number is profit. Anything below is a loss.</p>
-                </blockquote>
-                
-                <h2>How This Calculator Works</h2>
-                <p>This tool simplifies the calculation of your advertising profitability. Here's what the inputs mean:</p>
-                <ul>
-                    <li><strong>Total Ad Spend:</strong> The total amount of money you spent on your advertising campaigns (e.g., on Facebook, Google, etc.).</li>
-                    <li><strong>Total Revenue:</strong> The total revenue generated directly from those ad campaigns.</li>
-                    <li><strong>Cost of Goods Sold (COGS) %:</strong> The percentage of your revenue that goes towards the direct cost of producing your products. This is your product cost, not including marketing or shipping.</li>
-                </ul>
-
-                <h2>Understanding the Results</h2>
-                <p>The calculator provides three key outputs to guide your marketing strategy:</p>
-                <ol>
-                    <li><strong>Your ROAS:</strong> This is your current Return On Ad Spend based on the figures you entered. It's calculated as (Revenue / Ad Spend).</li>
-                    <li><strong>Break-Even ROAS:</strong> This is the minimum ROAS you need to achieve to not lose money. It is calculated as 1 / (1 - COGS %). This is your most important metric.</li>
-                    <li><strong>Net Profit:</strong> This is the true profit you've made from your ad campaigns after accounting for ad spend and the cost of goods.</li>
-                </ol>
-
-                <h2>Frequently Asked Questions (FAQ)</h2>
-                <Card className="bg-card mt-6">
-                    <CardHeader><CardTitle className="text-xl">FAQ</CardTitle></CardHeader>
-                    <CardContent className="space-y-4">
-                        <div>
-                            <h4 className="font-semibold">My ROAS is lower than my Break-Even ROAS. What should I do?</h4>
-                            <p className="text-sm text-muted-foreground">You are currently losing money on your ads. You should either work on improving your ad campaign's efficiency to increase revenue, or find ways to lower your COGS to reduce your break-even point.</p>
-                        </div>
-                        <div>
-                            <h4 className="font-semibold">Does this calculator include shipping or other fees?</h4>
-                            <p className="text-sm text-muted-foreground">This is a simplified ROAS calculator that focuses on product costs (COGS). For a more comprehensive view of profitability that includes shipping, returns, and other fees, please use our <a href="/tools/net-profit-calculator">True Net Profit Calculator</a>.</p>
-                        </div>
-                         <div>
-                            <h4 className="font-semibold">How can I improve my ROAS?</h4>
-                            <p className="text-sm text-muted-foreground">Improve your ad targeting, optimize your landing pages for conversion, use more compelling ad creatives, and test different offers. Increasing your Average Order Value (AOV) through upsells or bundles can also significantly boost ROAS.</p>
-                        </div>
+            <div className="max-w-5xl mx-auto">
+                <Card className="shadow-lg overflow-hidden">
+                    <CardContent className="p-2 sm:p-4">
+                        <ROASCalculator />
                     </CardContent>
                 </Card>
+            </div>
+
+            <div className="max-w-4xl mx-auto mt-24">
+                 <div className="text-center">
+                    <h2 className="text-3xl font-bold">Understanding Your Results</h2>
+                    <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
+                        This tool breaks down your advertising profitability into three core metrics. Here's what they mean for your business.
+                    </p>
+                 </div>
+            </div>
+            
+            <div className="max-w-4xl mx-auto mt-16">
+                 <h2 className="text-3xl font-bold text-center mb-8">Frequently Asked Questions</h2>
+                 <Accordion type="single" collapsible className="w-full">
+                    <AccordionItem value="item-1">
+                        <AccordionTrigger>My ROAS is lower than my Break-Even ROAS. What should I do?</AccordionTrigger>
+                        <AccordionContent>
+                        You are currently losing money on your ads. You should either work on improving your ad campaign's efficiency to increase revenue, or find ways to lower your COGS to reduce your break-even point.
+                        </AccordionContent>
+                    </AccordionItem>
+                    <AccordionItem value="item-2">
+                        <AccordionTrigger>Does this calculator include shipping or other fees?</AccordionTrigger>
+                        <AccordionContent>
+                        This is a simplified ROAS calculator that focuses on product costs (COGS). For a more comprehensive view of profitability that includes shipping, returns, and other fees, please use our <a href="/tools/net-profit-calculator" className="text-primary underline">True Net Profit Calculator</a>.
+                        </AccordionContent>
+                    </AccordionItem>
+                    <AccordionItem value="item-3">
+                        <AccordionTrigger>How can I improve my ROAS?</AccordionTrigger>
+                        <AccordionContent>
+                        Improve your ad targeting, optimize your landing pages for conversion, use more compelling ad creatives, and test different offers. Increasing your Average Order Value (AOV) through upsells or bundles can also significantly boost ROAS.
+                        </AccordionContent>
+                    </AccordionItem>
+                 </Accordion>
             </div>
           </div>
         </section>
