@@ -76,7 +76,7 @@ const generateBlogPostFlow = ai.defineFlow(
     }
 
     // Step 2: Generate the thumbnail image based on the data hint.
-    const { media } = await generate({
+    const { media } = await ai.generate({
       model: 'googleai/gemini-2.0-flash-preview-image-generation',
       prompt: `Generate a visually appealing, professional blog thumbnail for an article about D2C e-commerce. The theme is: ${textOutput.dataAiHint}. The style should be modern, clean, and use a professional color palette. No text on the image.`,
       config: {
