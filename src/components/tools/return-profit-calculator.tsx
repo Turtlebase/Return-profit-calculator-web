@@ -1,12 +1,16 @@
+
 "use client";
 
 import { useState, useMemo } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Slider } from '@/components/ui/slider';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { Info } from 'lucide-react';
+import { Info, Loader2, Sparkles, Lightbulb } from 'lucide-react';
+import { getNetProfitAnalysis } from '@/app/actions';
+import { type NetProfitAnalysisOutput } from '@/ai/flows/net-profit-analyzer';
 
 export function ReturnProfitCalculator() {
     const [sellingPrice, setSellingPrice] = useState("1000");
@@ -15,6 +19,9 @@ export function ReturnProfitCalculator() {
     const [returnRate, setReturnRate] = useState(15);
     const [returnProcessingCost, setReturnProcessingCost] = useState("50");
     const [paymentGatewayFee, setPaymentGatewayFee] = useState("2.5");
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    const [analysis, setAnalysis] = useState<NetProfitAnalysisOutput | null>(null);
 
     const {
         netProfitPerOrder,
@@ -58,6 +65,27 @@ export function ReturnProfitCalculator() {
             lossPerReturnedSale: lossPerReturn,
         };
     }, [sellingPrice, cogs, shippingCost, returnRate, returnProcessingCost, paymentGatewayFee]);
+    
+    const handleAnalysis = async () => {
+        setIsLoading(true);
+        setError(null);
+        setAnalysis(null);
+        try {
+            const result = await getNetProfitAnalysis({
+                sellingPrice: Number(sellingPrice),
+                cogs: Number(cogs),
+                shippingCost: Number(shippingCost),
+                returnRate: returnRate,
+                returnProcessingCost: Number(returnProcessingCost),
+                netProfitPerOrder: netProfitPerOrder,
+                breakEvenReturnRate: breakEvenReturnRate,
+            });
+            setAnalysis(result);
+        } catch (e: any) {
+            setError(e.message || "An unexpected error occurred.");
+        }
+        setIsLoading(false);
+    };
 
     return (
         <div className="p-4 grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
@@ -116,6 +144,39 @@ export function ReturnProfitCalculator() {
                     Your business breaks even at a <span className="font-bold">{breakEvenReturnRate.toFixed(2)}%</span> return rate. Your current rate is <span className="font-bold">{returnRate}%</span>.
                   </AlertDescription>
               </Alert>
+
+              <Button onClick={handleAnalysis} disabled={isLoading} className="w-full">
+                {isLoading ? <><Loader2 className="animate-spin" /> Analyzing...</> : <><Sparkles /> Get AI Analysis</>}
+              </Button>
+
+              {error && (
+                <Alert variant="destructive" className="mt-4">
+                  <AlertTitle>Analysis Failed</AlertTitle>
+                  <AlertDescription>{error}</AlertDescription>
+                </Alert>
+              )}
+              
+              {analysis && (
+                <Card className="animate-in fade-in-50 mt-4">
+                    <CardHeader>
+                        <CardTitle className="text-xl">{analysis.headline}</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                         <div className="prose prose-sm dark:prose-invert" dangerouslySetInnerHTML={{ __html: analysis.analysis }} />
+                         <Card>
+                            <CardHeader>
+                                <CardTitle className="flex items-center gap-2 text-base"><Lightbulb className="w-5 h-5 text-yellow-400" /> Recommendations</CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <ul className="space-y-2 list-disc list-inside text-sm text-muted-foreground">
+                                    {analysis.recommendations.map((rec, i) => <li key={i}>{rec}</li>)}
+                                </ul>
+                            </CardContent>
+                        </Card>
+                    </CardContent>
+                </Card>
+              )}
+
             </div>
         </div>
     );

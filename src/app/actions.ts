@@ -3,6 +3,10 @@
 
 import { analyzeRtoLoss, type AnalyzeRtoLossInput, type AnalyzeRtoLossOutput } from '@/ai/flows/rto-loss-analyzer';
 import { evaluateCodRisk, type CodRiskInput, type CodRiskOutput } from '@/ai/flows/cod-risk-evaluator';
+import { analyzeNetProfit, type NetProfitAnalysisInput, type NetProfitAnalysisOutput } from '@/ai/flows/net-profit-analyzer';
+import { analyzeRoas, type RoasAnalysisInput, type RoasAnalysisOutput } from '@/ai/flows/roas-analyzer';
+import { analyzeDiscount, type DiscountAnalysisInput, type DiscountAnalysisOutput } from '@/ai/flows/discount-analyzer';
+import { analyzeClv, type ClvAnalysisInput, type ClvAnalysisOutput } from '@/ai/flows/clv-analyzer';
 import { z } from 'zod';
 
 export async function getRtoLossAnalysis(input: AnalyzeRtoLossInput): Promise<AnalyzeRtoLossOutput> {
@@ -24,6 +28,47 @@ export async function getCodRiskAnalysis(input: CodRiskInput): Promise<CodRiskOu
     throw new Error("Failed to get analysis from AI. Please try again later.");
   }
 }
+
+export async function getNetProfitAnalysis(input: NetProfitAnalysisInput): Promise<NetProfitAnalysisOutput> {
+    try {
+        const result = await analyzeNetProfit(input);
+        return result;
+    } catch (error) {
+        console.error("Error in Net Profit Analysis:", error);
+        throw new Error("Failed to get analysis from AI. Please try again later.");
+    }
+}
+
+export async function getRoasAnalysis(input: RoasAnalysisInput): Promise<RoasAnalysisOutput> {
+    try {
+        const result = await analyzeRoas(input);
+        return result;
+    } catch (error) {
+        console.error("Error in ROAS Analysis:", error);
+        throw new Error("Failed to get analysis from AI. Please try again later.");
+    }
+}
+
+export async function getDiscountAnalysis(input: DiscountAnalysisInput): Promise<DiscountAnalysisOutput> {
+    try {
+        const result = await analyzeDiscount(input);
+        return result;
+    } catch (error) {
+        console.error("Error in Discount Analysis:", error);
+        throw new Error("Failed to get analysis from AI. Please try again later.");
+    }
+}
+
+export async function getClvAnalysis(input: ClvAnalysisInput): Promise<ClvAnalysisOutput> {
+    try {
+        const result = await analyzeClv(input);
+        return result;
+    } catch (error) {
+        console.error("Error in CLV Analysis:", error);
+        throw new Error("Failed to get analysis from AI. Please try again later.");
+    }
+}
+
 
 const emailSchema = z.string().email({ message: "Please enter a valid email address." });
 

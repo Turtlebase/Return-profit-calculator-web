@@ -4,3 +4,7 @@ config();
 
 import '@/ai/flows/rto-loss-analyzer.ts';
 import '@/ai/flows/cod-risk-evaluator.ts';
+import '@/ai/flows/net-profit-analyzer.ts';
+import '@/ai/flows/roas-analyzer.ts';
+import '@/ai/flows/discount-analyzer.ts';
+import '@/ai/flows/clv-analyzer.ts';
