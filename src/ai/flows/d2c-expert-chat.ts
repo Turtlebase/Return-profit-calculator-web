@@ -42,7 +42,7 @@ export async function chatWithD2cExpert(input: ChatInput): Promise<string> {
 
     try {
         const { text } = await ai.generate({
-            model: 'gemini-2.0-flash',
+            model: 'googleai/gemini-2.0-flash',
             system: systemPrompt,
             prompt: input.query,
             history: history,
