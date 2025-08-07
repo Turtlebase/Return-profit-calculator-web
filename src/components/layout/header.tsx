@@ -2,7 +2,7 @@
 "use client";
 
 import Link from "next/link";
-import { Menu, BotMessageSquare, Wrench, Info, BookText, Home as HomeIcon, ChevronDown, Contact, FileText, Lock } from "lucide-react";
+import { Menu, BotMessageSquare, Wrench, Info, BookText, HomeIcon, ChevronDown, Contact, FileText, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetClose } from "@/components/ui/sheet";
 import {
@@ -11,9 +11,12 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-
+import { usePathname } from 'next/navigation';
+import { cn } from "@/lib/utils";
 
 export default function Header() {
+  const pathname = usePathname();
+
   const mainNavLinks = [
     { name: "Home", href: "/", icon: HomeIcon },
     { name: "Tools", href: "/#tools", icon: Wrench },
@@ -30,32 +33,35 @@ export default function Header() {
   const mobileNavLinks = [...mainNavLinks, ...infoNavLinks];
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur-sm supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur-sm supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
           <BotMessageSquare className="h-8 w-8 text-primary" />
           <span className="text-xl font-bold">Returnprofit.online</span>
         </Link>
 
-        <nav className="hidden md:flex items-center gap-6">
+        <nav className="hidden md:flex items-center gap-1">
           {mainNavLinks.map((link) => (
             <Link
               key={link.name}
               href={link.href}
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+              className={cn(
+                "rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground",
+                pathname === link.href && "bg-secondary text-foreground"
+              )}
             >
               {link.name}
             </Link>
           ))}
             <DropdownMenu>
-                <DropdownMenuTrigger className="flex items-center gap-1 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground focus:outline-none">
+                <DropdownMenuTrigger className="flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground focus:outline-none data-[state=open]:bg-secondary data-[state=open]:text-foreground">
                     Info <ChevronDown className="h-4 w-4" />
                 </DropdownMenuTrigger>
-                <DropdownMenuContent>
+                <DropdownMenuContent align="end">
                     {infoNavLinks.map((link) => (
                          <DropdownMenuItem key={link.name} asChild>
                             <Link href={link.href} className="flex items-center gap-2">
-                                <link.icon className="h-4 w-4" />
+                                <link.icon className="h-4 w-4 text-muted-foreground" />
                                 {link.name}
                             </Link>
                          </DropdownMenuItem>

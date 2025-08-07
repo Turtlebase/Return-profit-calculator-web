@@ -6,10 +6,11 @@ import {
   ShieldCheck,
   Target,
   Percent,
-  HeartHandshake
+  HeartHandshake,
+  ArrowRight
 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { Card } from '@/components/ui/card';
 
 const tools = [
   {
@@ -57,28 +58,30 @@ const tools = [
 ];
 
 const ToolCard = ({ icon: Icon, title, description, href }: (typeof tools)[0]) => (
-    <Link href={href} className="group relative cursor-pointer overflow-hidden rounded-xl p-px bg-gradient-to-br from-primary/20 to-secondary/20 transition-all duration-300 hover:from-primary/50 hover:to-accent/50 hover:shadow-2xl hover:shadow-primary/20 block">
-      <div className="h-full rounded-[11px] bg-background p-6 transition-all duration-300 group-hover:-translate-y-1">
-          <div className="mb-4">
-              <div className="p-3 rounded-lg bg-primary/10 w-fit">
-                <Icon className="w-6 h-6 text-primary" />
-              </div>
-          </div>
-          <h3 className="text-lg font-semibold mb-1 text-foreground">{title}</h3>
-          <p className="text-muted-foreground text-sm mb-4">{description}</p>
-          <Button variant="link" className="p-0 h-auto text-primary">Open Tool &rarr;</Button>
+    <Link href={href} className="group block">
+      <Card className="h-full p-6 bg-card/50 dark:bg-card/20 backdrop-blur-lg border border-white/10 dark:border-white/5 rounded-2xl transition-all duration-300 hover:shadow-xl hover:border-primary/20 hover:-translate-y-2 hover:shadow-primary/5">
+        <div className="mb-4">
+            <div className="p-3 rounded-xl bg-gradient-to-br from-primary/10 to-transparent w-fit border border-primary/20">
+              <Icon className="w-7 h-7 text-primary" />
+            </div>
         </div>
+        <h3 className="text-xl font-bold mb-2 text-foreground">{title}</h3>
+        <p className="text-muted-foreground text-base mb-4">{description}</p>
+        <div className="flex items-center font-semibold text-primary text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            Open Tool <ArrowRight className="ml-2 h-4 w-4" />
+        </div>
+      </Card>
     </Link>
   );
 
 export default function ToolsShowcase() {
   return (
-    <section id="tools" className="py-24 sm:py-32 bg-background">
+    <section id="tools" className="py-24 sm:py-32 bg-secondary/50">
       <div className="container">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Your D2C Profit Toolkit</h2>
-          <p className="mt-4 max-w-2xl mx-auto text-muted-foreground">
-            Interactive tools to help you understand and improve your bottom line.
+          <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight">Your D2C Profitability Toolkit</h2>
+          <p className="mt-4 max-w-2xl mx-auto text-muted-foreground text-lg">
+            Free, interactive calculators to help you understand and improve your bottom line. No sign-up required.
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
