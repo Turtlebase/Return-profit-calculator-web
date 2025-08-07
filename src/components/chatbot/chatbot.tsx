@@ -54,7 +54,7 @@ export default function Chatbot() {
 
     try {
         const response = await getChatbotResponse({
-          history: messages, // Send the history *before* adding the new user message
+          history: newMessages.slice(0, -1), // Send history *without* the last user message
           query: trimmedInput,
         });
         
