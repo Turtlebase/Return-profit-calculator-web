@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState } from 'react';
@@ -16,16 +17,6 @@ import { Loader2, Sparkles, Image as ImageIcon, BookOpen } from 'lucide-react';
 import { generateBlogPost, type GenerateBlogPostOutput } from '@/app/actions';
 import Image from 'next/image';
 import { useToast } from '@/hooks/use-toast';
-import type { Metadata } from 'next';
-
-// This metadata is for client components and may not be picked up by crawlers.
-export const metadata: Metadata = {
-  title: 'Admin: AI Blog Post Generator',
-  robots: {
-    index: false,
-    follow: false,
-  },
-};
 
 const formSchema = z.object({
   title: z.string().min(10, 'Please enter a title of at least 10 characters.'),
