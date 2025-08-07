@@ -20,11 +20,9 @@ export default function Home() {
       <Header />
       <main className="flex-1">
         <Hero />
-        <div className="container">
-            <ToolsShowcase />
-            <BlogSection />
-            <NewsletterSignup />
-        </div>
+        <ToolsShowcase />
+        <BlogSection />
+        <NewsletterSignup />
       </main>
       <Footer />
     </div>

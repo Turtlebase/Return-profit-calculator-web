@@ -10,7 +10,7 @@ export default function BlogSection() {
   const topPosts = blogPosts.slice(0, 3);
   return (
     <section id="blog" className="py-24 sm:py-32 bg-background">
-      <div className="container">
+      <div className="container mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight">Weekly D2C Hacks</h2>
           <p className="mt-4 max-w-2xl mx-auto text-muted-foreground text-lg">

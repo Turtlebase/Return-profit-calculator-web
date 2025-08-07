@@ -77,7 +77,7 @@ const ToolCard = ({ icon: Icon, title, description, href }: (typeof tools)[0]) =
 export default function ToolsShowcase() {
   return (
     <section id="tools" className="py-24 sm:py-32 bg-secondary/50">
-      <div className="container">
+      <div className="container mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight">Your D2C Profitability Toolkit</h2>
           <p className="mt-4 max-w-2xl mx-auto text-muted-foreground text-lg">

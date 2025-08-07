@@ -50,7 +50,7 @@ export default function NewsletterSignup() {
 
   return (
     <section className="py-24 sm:py-32 bg-secondary/50">
-      <div className="container">
+      <div className="container mx-auto">
         <div className="relative isolate overflow-hidden bg-gradient-to-br from-primary to-blue-400 px-6 py-24 text-center shadow-2xl rounded-3xl sm:px-16">
            <h2 className="mx-auto max-w-2xl text-3xl font-bold tracking-tight text-white sm:text-4xl">
             Get D2C Insights Delivered to You

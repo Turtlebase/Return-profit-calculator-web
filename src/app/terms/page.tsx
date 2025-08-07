@@ -19,7 +19,7 @@ export default function TermsPage() {
     <div className="flex min-h-screen flex-col bg-background">
       <Header />
       <main className="flex-1">
-        <div className="container max-w-4xl py-24 sm:py-32">
+        <div className="container max-w-4xl py-24 sm:py-32 mx-auto">
           <header className="mb-12">
             <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
               Terms of Use
