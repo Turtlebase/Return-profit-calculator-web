@@ -38,7 +38,8 @@ export async function chatWithD2cExpert(input: ChatInput): Promise<string> {
         `;
 
     const history = [
-        { role: 'system' as const, content: [{ text: systemPrompt }] },
+        { role: 'user' as const, content: [{ text: systemPrompt }] },
+        { role: 'model' as const, content: [{ text: "Understood. I am ProfitPilot, ready to assist." }] },
         ...input.history.map((msg) => ({
             role: msg.role as 'user' | 'model',
             content: [{ text: msg.content }],
