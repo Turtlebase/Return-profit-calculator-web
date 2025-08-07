@@ -26,6 +26,7 @@ const ChatInputSchema = z.object({
 });
 export type ChatInput = z.infer<typeof ChatInputSchema>;
 
+// Initialize the model once outside the function
 const model = googleAI('gemini-2.0-flash');
 
 export async function chatWithD2cExpert(input: ChatInput): Promise<string> {
@@ -40,11 +41,13 @@ export async function chatWithD2cExpert(input: ChatInput): Promise<string> {
         When responding, do not use markdown. Respond in plain text.
         `;
 
+    // The history needs to be constructed in the format the `generate` function expects.
+    // Each message's content must be an array of parts, e.g., [{ text: '...' }]
     const history: Content[] = [
-        // Prime the model with the system instruction and a confirmation.
+        // Prime the model with the system instruction from the user and a confirmation from the model.
         { role: 'user', content: [{ text: systemPrompt }] },
         { role: 'model', content: [{ text: "Understood. I am ProfitPilot, your expert D2C assistant, ready to help." }] },
-        // Map the rest of the history to the correct format.
+        // Map the rest of the incoming history to the correct format.
         ...input.history.map((msg) => ({
             role: msg.role as 'user' | 'model',
             content: [{ text: msg.content }],

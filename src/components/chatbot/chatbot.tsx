@@ -48,13 +48,17 @@ export default function Chatbot() {
     const userMessage: ChatMessage = { role: 'user', content: trimmedInput };
     const newMessages: ChatMessage[] = [...messages, userMessage];
 
+    // Immediately update the UI with the user's message
     setMessages(newMessages);
     setInput('');
     setIsLoading(true);
 
     try {
+        // The history sent to the AI should not include the priming message or the initial welcome.
+        const historyForAI = newMessages.slice(1, -1);
+        
         const response = await getChatbotResponse({
-          history: newMessages.slice(0, -1), // Send history *without* the last user message
+          history: historyForAI, // Send the correct history
           query: trimmedInput,
         });
         
