@@ -3,7 +3,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sparkles, MessageCircle, X, Send, Loader2 } from 'lucide-react';
+import { Sparkles, MessageCircle, X, Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -13,10 +13,36 @@ import { Avatar, AvatarFallback } from '../ui/avatar';
 import { cn } from '@/lib/utils';
 
 
+const TypingIndicator = () => (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="flex items-center gap-1.5"
+    >
+        <motion.div
+            className="h-2 w-2 bg-muted-foreground rounded-full"
+            animate={{ y: [0, -4, 0] }}
+            transition={{ duration: 0.8, repeat: Infinity, ease: 'easeInOut' }}
+        />
+        <motion.div
+            className="h-2 w-2 bg-muted-foreground rounded-full"
+            animate={{ y: [0, -4, 0] }}
+            transition={{ duration: 0.8, delay: 0.1, repeat: Infinity, ease: 'easeInOut' }}
+        />
+        <motion.div
+            className="h-2 w-2 bg-muted-foreground rounded-full"
+            animate={{ y: [0, -4, 0] }}
+            transition={{ duration: 0.8, delay: 0.2, repeat: Infinity, ease: 'easeInOut' }}
+        />
+    </motion.div>
+);
+
+
 export default function Chatbot() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([
-    { role: 'model', content: "Hello! I'm ProfitPilot, your AI D2C expert. How can I help you improve your profitability today?" }
+    { role: 'model', content: "<p>Hello! I'm ProfitPilot, your AI D2C expert. How can I help you improve your profitability today?</p>" }
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -67,7 +93,7 @@ export default function Chatbot() {
 
     } catch (error: any) {
         console.error("Chatbot error:", error);
-        const errorMessage: ChatMessage = { role: 'model', content: `Error: ${error.message}` };
+        const errorMessage: ChatMessage = { role: 'model', content: `<p class="text-destructive">Error: ${error.message}</p>` };
          setMessages(prev => [...prev, errorMessage]);
     } finally {
         setIsLoading(false);
@@ -111,7 +137,11 @@ export default function Chatbot() {
                                         </Avatar>
                                     )}
                                     <div className={cn("max-w-[80%] rounded-2xl p-3 text-sm", message.role === 'user' ? 'bg-primary text-primary-foreground rounded-br-none' : 'bg-secondary rounded-bl-none')}>
-                                        {message.content.split('\n').map((line, i) => <p key={i}>{line}</p>)}
+                                        {message.role === 'user' ? (
+                                            <p>{message.content}</p>
+                                        ) : (
+                                            <div className="prose prose-sm dark:prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: message.content }} />
+                                        )}
                                     </div>
                                      {message.role === 'user' && (
                                         <Avatar className="w-8 h-8">
@@ -126,7 +156,7 @@ export default function Chatbot() {
                                         <AvatarFallback className="bg-primary text-primary-foreground"><Sparkles className="w-5 h-5" /></AvatarFallback>
                                     </Avatar>
                                     <div className="bg-secondary rounded-2xl p-3 text-sm rounded-bl-none">
-                                        <Loader2 className="w-5 h-5 animate-spin" />
+                                        <TypingIndicator />
                                     </div>
                                 </div>
                             )}

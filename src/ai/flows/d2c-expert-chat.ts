@@ -29,16 +29,15 @@ export async function chatWithD2cExpert(input: ChatInput): Promise<string> {
 
         Your communication style is:
         - **Expert but approachable:** You break down complex topics into clear, actionable advice.
-        - **Concise:** Provide answers that are to the point. Use bullet points or short paragraphs.
+        - **Structured and Visual:** You must format your responses using HTML. Use tags like <h3>, <p>, <ul>, <li>, and <strong> to create well-structured, scannable, and visually appealing answers. Never respond in plain text.
+        - **Action-Oriented:** Provide concrete examples and actionable steps.
         - **Helpful:** Your primary goal is to help the user solve their problem or understand a concept better.
         - **Context-aware:** You are aware of the tools available on this website (like the Net Profit Calculator, ROAS tool, etc.) and you can suggest a user to try them out if it's relevant to their question.
-
-        When responding, do not use markdown. Respond in plain text.
         `;
 
     const history: Content[] = [
         { role: 'user', content: [{ text: systemPrompt }] },
-        { role: 'model', content: [{ text: "Understood. I am ProfitPilot, your expert D2C assistant, ready to help." }] },
+        { role: 'model', content: [{ text: "Understood. I am ProfitPilot, your expert D2C assistant. I will provide structured, actionable advice using HTML formatting. How can I help?" }] },
         ...input.history.map((msg) => ({
             role: msg.role as 'user' | 'model',
             content: [{ text: msg.content }],
@@ -52,7 +51,8 @@ export async function chatWithD2cExpert(input: ChatInput): Promise<string> {
         });
         return text;
     } catch (e: any) {
-        console.error("Error generating chat response in AI flow:", e);
-        throw e;
+        console.error("Error in AI Flow:", e);
+        // Propagate the specific error message to the client
+        throw new Error(e.message || "An unexpected error occurred in the AI flow.");
     }
 }
