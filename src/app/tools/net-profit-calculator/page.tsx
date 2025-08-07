@@ -99,13 +99,11 @@ export default function NetProfitCalculatorPage() {
                 </p>
               </header>
 
-               <div className="max-w-5xl mx-auto">
-                  <Card className="shadow-lg overflow-hidden">
-                      <CardContent className="p-0">
-                          <ReturnProfitCalculator />
-                      </CardContent>
-                  </Card>
-              </div>
+              <Card className="shadow-lg overflow-hidden max-w-5xl mx-auto">
+                  <CardContent className="p-0">
+                      <ReturnProfitCalculator />
+                  </CardContent>
+              </Card>
 
               <div className="max-w-2xl mx-auto mt-24">
                    <h2 className="text-3xl font-bold text-center mb-8">How It Works</h2>
