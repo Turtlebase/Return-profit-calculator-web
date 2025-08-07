@@ -55,7 +55,7 @@ export default function Chatbot() {
 
     try {
         // The history sent to the AI should not include the priming message or the initial welcome.
-        const historyForAI = newMessages.slice(1, -1);
+        const historyForAI = newMessages.slice(1);
         
         const response = await getChatbotResponse({
           history: historyForAI, // Send the correct history
@@ -65,9 +65,9 @@ export default function Chatbot() {
         const modelMessage: ChatMessage = { role: 'model', content: response };
         setMessages(prev => [...prev, modelMessage]);
 
-    } catch (error) {
+    } catch (error: any) {
         console.error("Chatbot error:", error);
-        const errorMessage: ChatMessage = { role: 'model', content: "Sorry, I'm having trouble connecting right now. Please try again in a moment." };
+        const errorMessage: ChatMessage = { role: 'model', content: `Error: ${error.message}` };
          setMessages(prev => [...prev, errorMessage]);
     } finally {
         setIsLoading(false);
