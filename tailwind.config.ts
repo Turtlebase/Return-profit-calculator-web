@@ -114,12 +114,12 @@ export default {
             '0%, 100%': {
                 opacity: '1',
                 transform: 'scale(1)',
-                'box-shadow': '0 0 0 0 rgba(var(--primary-rgb), 0.4)',
+                'box-shadow': '0 0 0 0 hsl(var(--primary) / 0.4)',
             },
             '70%': {
                 opacity: '1',
                 transform: 'scale(1.05)',
-                'box-shadow': '0 0 0 10px rgba(var(--primary-rgb), 0)',
+                'box-shadow': '0 0 0 10px hsl(var(--primary) / 0)',
             },
         },
       },

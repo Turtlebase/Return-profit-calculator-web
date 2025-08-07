@@ -86,8 +86,8 @@ export async function getChatbotResponse(input: ChatInput): Promise<string> {
         const result = await chatWithD2cExpert(input);
         return result;
     } catch (error) {
-        console.error("Error in Chatbot:", error);
-        return "Sorry, I encountered an error and couldn't process your request. Please try again.";
+        console.error("Error in Chatbot action:", error);
+        return "Sorry, I encountered an unexpected error and couldn't process your request. Please try again.";
     }
 }
 

@@ -34,16 +34,19 @@ export default function Chatbot() {
 
   useEffect(() => {
     // Scroll to bottom whenever messages update
-    scrollToBottom();
-  }, [messages]);
+    if (isOpen) {
+        setTimeout(scrollToBottom, 100);
+    }
+  }, [messages, isOpen]);
 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!input.trim() || isLoading) return;
+    const trimmedInput = input.trim();
+    if (!trimmedInput || isLoading) return;
 
-    const userMessage: ChatMessage = { role: 'user', content: input };
-    const newMessages = [...messages, userMessage];
+    const userMessage: ChatMessage = { role: 'user', content: trimmedInput };
+    const newMessages: ChatMessage[] = [...messages, userMessage];
 
     setMessages(newMessages);
     setInput('');
@@ -52,7 +55,7 @@ export default function Chatbot() {
     try {
         const response = await getChatbotResponse({
           history: messages, // Send the history *before* adding the new user message
-          query: input,
+          query: trimmedInput,
         });
         
         const modelMessage: ChatMessage = { role: 'model', content: response };

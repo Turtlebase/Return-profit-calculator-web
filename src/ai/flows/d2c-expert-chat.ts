@@ -41,18 +41,25 @@ export async function chatWithD2cExpert(input: ChatInput): Promise<string> {
         `;
 
     const history: Content[] = [
+        // Prime the model with the system instruction and a confirmation.
         { role: 'user', content: [{ text: systemPrompt }] },
         { role: 'model', content: [{ text: "Understood. I am ProfitPilot, your expert D2C assistant, ready to help." }] },
+        // Map the rest of the history to the correct format.
         ...input.history.map((msg) => ({
             role: msg.role as 'user' | 'model',
             content: [{ text: msg.content }],
         }))
     ];
 
-    const { text } = await generate({
-        model: model,
-        prompt: input.query,
-        history: history,
-    });
-    return text;
+    try {
+        const { text } = await generate({
+            model: model,
+            prompt: input.query,
+            history: history,
+        });
+        return text;
+    } catch (e) {
+        console.error("Error generating chat response:", e);
+        return "I'm sorry, but I encountered an internal error while processing your request. Please try again shortly."
+    }
 }
