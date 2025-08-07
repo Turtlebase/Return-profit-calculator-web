@@ -1,5 +1,6 @@
+
 import Link from 'next/link';
-import { BotMessageSquare } from 'lucide-react';
+import Image from 'next/image';
 
 export default function Footer() {
   const mainLinks = [
@@ -20,7 +21,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
             <div className="lg:col-span-1 space-y-4">
                 <Link href="/" className="flex items-center gap-2">
-                  <BotMessageSquare className="h-8 w-8 text-primary" />
+                  <Image src="/logo.png" alt="Returnprofit.online Logo" width={32} height={32} />
                   <span className="text-xl font-bold">Returnprofit.online</span>
                 </Link>
                 <p className="text-sm text-muted-foreground max-w-xs">

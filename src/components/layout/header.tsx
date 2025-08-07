@@ -2,7 +2,7 @@
 "use client";
 
 import Link from "next/link";
-import { Menu, BotMessageSquare, Wrench, Info, BookText, HomeIcon, ChevronDown, Contact, FileText, Lock } from "lucide-react";
+import { Menu, Wrench, Info, BookText, HomeIcon, ChevronDown, Contact, FileText, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetClose } from "@/components/ui/sheet";
 import {
@@ -13,6 +13,8 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { usePathname } from 'next/navigation';
 import { cn } from "@/lib/utils";
+import Image from "next/image";
+
 
 export default function Header() {
   const pathname = usePathname();
@@ -36,7 +38,7 @@ export default function Header() {
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur-sm supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
-          <BotMessageSquare className="h-8 w-8 text-primary" />
+          <Image src="/logo.png" alt="Returnprofit.online Logo" width={32} height={32} />
           <span className="text-xl font-bold">Returnprofit.online</span>
         </Link>
 
@@ -84,7 +86,7 @@ export default function Header() {
                  <div className="flex flex-col h-full">
                     <div className="flex items-center p-4 border-b">
                        <Link href="/" className="flex items-center gap-2">
-                           <BotMessageSquare className="h-6 w-6 text-primary" />
+                           <Image src="/logo.png" alt="Returnprofit.online Logo" width={24} height={24} />
                           <span className="font-bold">Returnprofit.online</span>
                        </Link>
                     </div>
