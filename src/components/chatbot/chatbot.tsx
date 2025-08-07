@@ -80,7 +80,7 @@ export default function Chatbot() {
     setIsLoading(true);
 
     try {
-        // The history sent to the AI should not include the priming message or the initial welcome.
+        // The history sent to the AI should not include the initial welcome message.
         const historyForAI = newMessages.slice(1);
         
         const response = await getChatbotResponse({
