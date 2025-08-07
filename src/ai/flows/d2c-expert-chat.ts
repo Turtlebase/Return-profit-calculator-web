@@ -11,6 +11,7 @@
 import { ai } from '@/ai/genkit';
 import { z } from 'zod';
 import { generate } from 'genkit';
+import { googleAI } from '@genkit-ai/googleai';
 
 const ChatMessageSchema = z.object({
   role: z.enum(['user', 'model']),
@@ -39,15 +40,17 @@ export async function chatWithD2cExpert(input: ChatInput): Promise<string> {
 
     const history = [
         { role: 'user' as const, content: [{ text: systemPrompt }] },
-        { role: 'model' as const, content: [{ text: "Understood. I am ProfitPilot, ready to assist." }] },
+        { role: 'model' as const, content: [{ text: "Understood. I am ProfitPilot, your expert D2C assistant, ready to help." }] },
         ...input.history.map((msg) => ({
             role: msg.role as 'user' | 'model',
             content: [{ text: msg.content }],
         }))
     ];
 
+    const model = googleAI('gemini-2.0-flash');
+
     const { text } = await generate({
-        model: 'googleai/gemini-2.0-flash',
+        model: model,
         prompt: input.query,
         history: history,
     });

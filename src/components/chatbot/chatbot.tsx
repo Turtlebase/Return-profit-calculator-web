@@ -24,7 +24,7 @@ export default function Chatbot() {
 
   const scrollToBottom = () => {
     if (scrollAreaRef.current) {
-        const scrollableView = scrollAreaRef.current.querySelector('div');
+        const scrollableView = scrollAreaRef.current.querySelector('div[data-radix-scroll-area-viewport]');
         if (scrollableView) {
            scrollableView.scrollTo({ top: scrollableView.scrollHeight, behavior: 'smooth' });
         }
@@ -40,8 +40,8 @@ export default function Chatbot() {
     e.preventDefault();
     if (!input.trim() || isLoading) return;
 
-    const currentInput = input;
-    const newMessages: ChatMessage[] = [...messages, { role: 'user', content: currentInput }];
+    const userInput: ChatMessage = { role: 'user', content: input };
+    const newMessages: ChatMessage[] = [...messages, userInput];
     
     setMessages(newMessages);
     setInput('');
@@ -49,14 +49,15 @@ export default function Chatbot() {
 
     try {
         const response = await getChatbotResponse({
-          history: messages, // Pass the state *before* adding the new user message for the API call
-          query: currentInput,
+          history: messages, // Send the history *before* adding the new user message
+          query: input,
         });
         
         const modelMessage: ChatMessage = { role: 'model', content: response };
         setMessages(prev => [...prev, modelMessage]);
 
     } catch (error) {
+        console.error("Chatbot error:", error);
         const errorMessage: ChatMessage = { role: 'model', content: "Sorry, I'm having trouble connecting right now. Please try again in a moment." };
          setMessages(prev => [...prev, errorMessage]);
     } finally {
