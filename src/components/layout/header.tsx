@@ -39,7 +39,7 @@ export default function Header() {
       <div className="container flex h-16 items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
           <Image src="/logo.png" alt="Returnprofit.online Logo" width={32} height={32} />
-          <span className="text-xl font-bold">
+          <span className="text-xl font-bold [text-shadow:1px_1px_2px_rgba(0,0,0,0.1)]">
             <span className="text-primary">Return</span>
             <span className="text-accent">profit</span>
             <span className="text-foreground">.online</span>
