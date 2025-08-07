@@ -10,8 +10,6 @@
 
 import { ai } from '@/ai/genkit';
 import { z } from 'zod';
-import { generate } from 'genkit';
-import { googleAI } from '@genkit-ai/googleai';
 import { Content } from 'genkit/content';
 
 const ChatMessageSchema = z.object({
@@ -26,9 +24,6 @@ const ChatInputSchema = z.object({
 });
 export type ChatInput = z.infer<typeof ChatInputSchema>;
 
-// Initialize the model once outside the function
-const model = googleAI('gemini-2.0-flash');
-
 export async function chatWithD2cExpert(input: ChatInput): Promise<string> {
     const systemPrompt = `You are a world-class D2C e-commerce strategist from India, acting as a helpful AI assistant named 'ProfitPilot'. Your expertise covers profitability, marketing, RTO reduction, logistics, and all facets of running a successful online brand in the Indian market.
 
@@ -41,12 +36,9 @@ export async function chatWithD2cExpert(input: ChatInput): Promise<string> {
         When responding, do not use markdown. Respond in plain text.
         `;
 
-    // The history needs to be constructed in the format the `generate` function expects.
     const history: Content[] = [
-        // Prime the model with the system instruction from the user and a confirmation from the model.
         { role: 'user', content: [{ text: systemPrompt }] },
         { role: 'model', content: [{ text: "Understood. I am ProfitPilot, your expert D2C assistant, ready to help." }] },
-        // Map the rest of the incoming history to the correct format.
         ...input.history.map((msg) => ({
             role: msg.role as 'user' | 'model',
             content: [{ text: msg.content }],
@@ -54,15 +46,13 @@ export async function chatWithD2cExpert(input: ChatInput): Promise<string> {
     ];
 
     try {
-        const { text } = await generate({
-            model: model,
+        const { text } = await ai.generate({
             prompt: input.query,
             history: history,
         });
         return text;
-    } catch (e) {
+    } catch (e: any) {
         console.error("Error generating chat response in AI flow:", e);
-        // Re-throw the error so the server action can catch it and pass it to the client.
         throw e;
     }
 }
