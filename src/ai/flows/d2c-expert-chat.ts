@@ -42,7 +42,6 @@ export async function chatWithD2cExpert(input: ChatInput): Promise<string> {
         `;
 
     // The history needs to be constructed in the format the `generate` function expects.
-    // Each message's content must be an array of parts, e.g., [{ text: '...' }]
     const history: Content[] = [
         // Prime the model with the system instruction from the user and a confirmation from the model.
         { role: 'user', content: [{ text: systemPrompt }] },
@@ -62,7 +61,8 @@ export async function chatWithD2cExpert(input: ChatInput): Promise<string> {
         });
         return text;
     } catch (e) {
-        console.error("Error generating chat response:", e);
-        return "I'm sorry, but I encountered an internal error while processing your request. Please try again shortly."
+        console.error("Error generating chat response in AI flow:", e);
+        // Re-throw the error so the server action can catch it and pass it to the client.
+        throw e;
     }
 }
