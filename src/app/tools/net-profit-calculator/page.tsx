@@ -77,8 +77,8 @@ const VisualProfitJourney = () => (
             <ArrowDown className="w-8 h-8 text-primary/80 bg-background z-10 animate-bounce" />
         </div>
          <div className="flex flex-col items-center text-center p-6 rounded-lg bg-gradient-to-br from-primary/20 to-green-400/20 border-2 border-green-400/80 shadow-2xl shadow-green-400/10">
-            <h3 className="text-2xl font-bold text-white">True Net Profit</h3>
-            <p className="text-green-300/80">The final profit in your bank per order.</p>
+            <h3 className="text-2xl font-bold text-foreground">True Net Profit</h3>
+            <p className="text-muted-foreground">The final profit in your bank per order.</p>
         </div>
     </div>
 );
@@ -89,51 +89,53 @@ export default function NetProfitCalculatorPage() {
     <div className="flex min-h-screen flex-col bg-background">
       <Header />
       <main className="flex-1">
-        <section className="py-12 md:py-24">
-          <div className="container max-w-6xl mx-auto">
-            <header className="mb-12 text-center">
-              <h1 className="text-4xl md:text-5xl font-bold tracking-tight">True Net Profit Calculator</h1>
-              <p className="mt-4 text-lg text-muted-foreground">
-                Go beyond surface-level revenue. Understand your real profit per order after all costs are accounted for.
-              </p>
-            </header>
+        <div className="container mx-auto">
+          <section className="py-12 md:py-24">
+              <header className="mb-12 text-center">
+                <h1 className="text-4xl md:text-5xl font-bold tracking-tight">True Net Profit Calculator</h1>
+                <p className="mt-4 text-lg text-muted-foreground">
+                  Go beyond surface-level revenue. Understand your real profit per order after all costs are accounted for.
+                </p>
+              </header>
 
-            <Card className="shadow-lg overflow-hidden max-w-5xl mx-auto">
-                <CardContent className="p-0">
-                    <ReturnProfitCalculator />
-                </CardContent>
-            </Card>
+              <div className="max-w-6xl mx-auto">
+                <Card className="shadow-lg overflow-hidden">
+                    <CardContent className="p-0">
+                        <ReturnProfitCalculator />
+                    </CardContent>
+                </Card>
 
-            <div className="max-w-2xl mx-auto mt-24">
-                  <h2 className="text-3xl font-bold text-center mb-8">How It Works</h2>
-                  <VisualProfitJourney />
-            </div>
+                <div className="max-w-2xl mx-auto mt-24">
+                      <h2 className="text-3xl font-bold text-center mb-8">How It Works</h2>
+                      <VisualProfitJourney />
+                </div>
 
-            <div className="max-w-4xl mx-auto mt-24">
-                  <h2 className="text-3xl font-bold text-center mb-8">Frequently Asked Questions</h2>
-                  <Accordion type="single" collapsible className="w-full">
-                    <AccordionItem value="item-1">
-                        <AccordionTrigger>How can I reduce my return rate?</AccordionTrigger>
-                        <AccordionContent>
-                        Focus on clear product descriptions, high-quality images, and customer reviews. Proactive communication and a simple, fair return policy can also help. For high-risk COD orders, consider phone call verification before shipping.
-                        </AccordionContent>
-                    </AccordionItem>
-                    <AccordionItem value="item-2">
-                        <AccordionTrigger>Why is my Break-Even Return Rate so important?</AccordionTrigger>
-                        <AccordionContent>
-                        This is your danger zone threshold. If your actual return rate climbs above your break-even rate, you are officially losing money on an average order basis. It's a critical health metric for your business that signals when you need to urgently address profitability issues.
-                        </AccordionContent>
-                    </AccordionItem>
-                    <AccordionItem value="item-3">
-                        <AccordionTrigger>What are the biggest hidden costs I should watch out for?</AccordionTrigger>
-                        <AccordionContent>
-                        The biggest hidden costs are almost always related to returns. It's not just the reverse shipping fee. You also lose the original forward shipping cost, incur restocking labor costs, and sometimes the product is damaged and cannot be resold. This calculator helps model that combined negative impact.
-                        </AccordionContent>
-                    </AccordionItem>
-                  </Accordion>
-            </div>
-          </div>
-        </section>
+                <div className="max-w-4xl mx-auto mt-24">
+                      <h2 className="text-3xl font-bold text-center mb-8">Frequently Asked Questions</h2>
+                      <Accordion type="single" collapsible className="w-full">
+                        <AccordionItem value="item-1">
+                            <AccordionTrigger>How can I reduce my return rate?</AccordionTrigger>
+                            <AccordionContent>
+                            Focus on clear product descriptions, high-quality images, and customer reviews. Proactive communication and a simple, fair return policy can also help. For high-risk COD orders, consider phone call verification before shipping.
+                            </AccordionContent>
+                        </AccordionItem>
+                        <AccordionItem value="item-2">
+                            <AccordionTrigger>Why is my Break-Even Return Rate so important?</AccordionTrigger>
+                            <AccordionContent>
+                            This is your danger zone threshold. If your actual return rate climbs above your break-even rate, you are officially losing money on an average order basis. It's a critical health metric for your business that signals when you need to urgently address profitability issues.
+                            </AccordionContent>
+                        </AccordionItem>
+                        <AccordionItem value="item-3">
+                            <AccordionTrigger>What are the biggest hidden costs I should watch out for?</AccordionTrigger>
+                            <AccordionContent>
+                            The biggest hidden costs are almost always related to returns. It's not just the reverse shipping fee. You also lose the original forward shipping cost, incur restocking labor costs, and sometimes the product is damaged and cannot be resold. This calculator helps model that combined negative impact.
+                            </AccordionContent>
+                        </AccordionItem>
+                      </Accordion>
+                </div>
+              </div>
+          </section>
+        </div>
       </main>
       <Footer />
     </div>
