@@ -50,7 +50,6 @@ export default function Chatbot() {
 
   const scrollToBottom = () => {
     if (scrollAreaRef.current) {
-        // Correctly target the viewport element within the ScrollArea component
         const scrollableView = scrollAreaRef.current.querySelector('div[data-radix-scroll-area-viewport]');
         if (scrollableView) {
            scrollableView.scrollTo({ top: scrollableView.scrollHeight, behavior: 'smooth' });
@@ -59,7 +58,6 @@ export default function Chatbot() {
   };
 
   useEffect(() => {
-    // Scroll to bottom whenever messages update
     if (isOpen) {
         setTimeout(scrollToBottom, 100);
     }
@@ -74,21 +72,27 @@ export default function Chatbot() {
     const userMessage: ChatMessage = { role: 'user', content: trimmedInput };
     const newMessages: ChatMessage[] = [...messages, userMessage];
 
-    // Immediately update the UI with the user's message
     setMessages(newMessages);
     setInput('');
     setIsLoading(true);
 
     try {
-        // The history sent to the AI should not include the initial welcome message.
         const historyForAI = newMessages.slice(1);
         
-        const response = await getChatbotResponse({
-          history: historyForAI, // Send the correct history
+        let response = await getChatbotResponse({
+          history: historyForAI,
           query: trimmedInput,
         });
+
+        // Clean the response to remove markdown code blocks
+        if (response.startsWith('```html')) {
+          response = response.substring(7);
+        }
+        if (response.endsWith('```')) {
+          response = response.substring(0, response.length - 3);
+        }
         
-        const modelMessage: ChatMessage = { role: 'model', content: response };
+        const modelMessage: ChatMessage = { role: 'model', content: response.trim() };
         setMessages(prev => [...prev, modelMessage]);
 
     } catch (error: any) {
