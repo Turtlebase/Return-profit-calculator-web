@@ -17,7 +17,9 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    // In a real app, you might fetch this from a CMS
     const foundPost = staticBlogPosts.find((p) => p.slug === params.slug);
+    
     setPost(foundPost || null);
     setIsLoading(false);
   }, [params.slug]);
@@ -214,7 +216,8 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
         <div className="flex min-h-screen flex-col bg-background">
             <Header />
             <main className="flex-1">
-                <article className="container max-w-4xl py-12 md:py-24">
+              <div className="container">
+                <article className="max-w-4xl mx-auto py-12 md:py-24">
                     <Skeleton className="h-8 w-1/4 mb-4" />
                     <Skeleton className="h-12 w-3/4 mb-4" />
                     <Skeleton className="h-6 w-1/2 mb-8" />
@@ -225,6 +228,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
                         <Skeleton className="h-4 w-5/6" />
                     </div>
                 </article>
+              </div>
             </main>
             <Footer />
         </div>
@@ -253,33 +257,35 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
       </Head>
       <Header />
       <main className="flex-1">
-        <article className="container max-w-4xl py-12 md:py-24">
-          <header className="mb-8 text-center">
-            <Badge variant="secondary" className="mb-4">
-              {post.category}
-            </Badge>
-            <h1 className="text-3xl md:text-5xl font-bold tracking-tight leading-tight">
-              {post.title}
-            </h1>
-            <p className="mt-4 text-lg text-muted-foreground max-w-3xl mx-auto">
-              {post.description}
-            </p>
-          </header>
+        <div className="container">
+          <article className="max-w-4xl mx-auto py-12 md:py-24">
+            <header className="mb-8 text-center">
+              <Badge variant="secondary" className="mb-4">
+                {post.category}
+              </Badge>
+              <h1 className="text-3xl md:text-5xl font-bold tracking-tight leading-tight">
+                {post.title}
+              </h1>
+              <p className="mt-4 text-lg text-muted-foreground max-w-3xl mx-auto">
+                {post.description}
+              </p>
+            </header>
 
-          <Image
-            src={post.image}
-            alt={post.title}
-            width={1200}
-            height={600}
-            className="w-full rounded-lg object-cover mb-12 border shadow-lg"
-            data-ai-hint={post.dataAiHint}
-            priority // Prioritize loading the main blog image
-          />
-          
-          <div className="prose prose-lg dark:prose-invert max-w-none mx-auto">
-             {renderContent()}
-          </div>
-        </article>
+            <Image
+              src={post.image}
+              alt={post.title}
+              width={1200}
+              height={600}
+              className="w-full rounded-lg object-cover mb-12 border shadow-lg"
+              data-ai-hint={post.dataAiHint}
+              priority // Prioritize loading the main blog image
+            />
+            
+            <div className="prose prose-lg dark:prose-invert max-w-none mx-auto">
+               {renderContent()}
+            </div>
+          </article>
+        </div>
       </main>
       <Footer />
     </div>

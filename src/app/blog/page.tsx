@@ -12,8 +12,8 @@ export default function BlogPage() {
     <div className="flex min-h-screen flex-col bg-background">
       <Header />
       <main className="flex-1">
-        <section className="py-24 sm:py-32">
-          <div className="container">
+        <div className="container">
+          <section className="py-24 sm:py-32">
             <div className="text-center mb-16">
               <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
                 Weekly D2C Hacks
@@ -29,8 +29,8 @@ export default function BlogPage() {
                 <BlogCard key={post.slug} post={post} />
               ))}
             </div>
-          </div>
-        </section>
+          </section>
+        </div>
       </main>
       <Footer />
     </div>
