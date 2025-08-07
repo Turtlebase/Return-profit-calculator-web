@@ -7,7 +7,7 @@ export default function Hero() {
   return (
     <section className="relative overflow-hidden bg-background">
       <div className="absolute inset-0 z-0 opacity-30 dark:opacity-20 bg-[radial-gradient(circle_at_50%_50%,_var(--tw-gradient-stops))] from-primary/20 via-accent/20 to-secondary/20 animate-gradient-bg"></div>
-      <div className="container relative z-10 py-20 sm:py-24 lg:py-32 text-center">
+      <div className="container relative z-10 py-12 sm:py-16 lg:py-24 text-center">
         <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl font-headline bg-gradient-to-br from-foreground to-foreground/70 text-transparent bg-clip-text animate-fade-in-up" style={{ animationDelay: '0.2s', animationFillMode: 'backwards' }}>
           Stop Guessing.
           <br />
