@@ -8,6 +8,13 @@ export default {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
+    container: {
+      center: true,
+      padding: '2rem',
+      screens: {
+        '2xl': '1400px',
+      },
+    },
     extend: {
       fontFamily: {
         body: ['var(--font-inter)', 'sans-serif'],
@@ -102,13 +109,26 @@ export default {
           '0%': { 'background-position': '0% 50%' },
           '50%': { 'background-position': '100% 50%' },
           '100%': { 'background-position': '0% 50%' },
-        }
+        },
+        'pulse-strong': {
+            '0%, 100%': {
+                opacity: '1',
+                transform: 'scale(1)',
+                'box-shadow': '0 0 0 0 rgba(var(--primary-rgb), 0.4)',
+            },
+            '70%': {
+                opacity: '1',
+                transform: 'scale(1.05)',
+                'box-shadow': '0 0 0 10px rgba(var(--primary-rgb), 0)',
+            },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         'fade-in-up': 'fade-in-up 0.6s ease-out',
         'gradient-bg': 'gradient-bg 15s ease infinite',
+        'pulse-strong': 'pulse-strong 2s infinite',
       },
     },
   },

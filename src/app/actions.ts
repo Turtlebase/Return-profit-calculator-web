@@ -7,6 +7,8 @@ import { analyzeNetProfit, type NetProfitAnalysisInput, type NetProfitAnalysisOu
 import { analyzeRoas, type RoasAnalysisInput, type RoasAnalysisOutput } from '@/ai/flows/roas-analyzer';
 import { analyzeDiscount, type DiscountAnalysisInput, type DiscountAnalysisOutput } from '@/ai/flows/discount-analyzer';
 import { analyzeClv, type ClvAnalysisInput, type ClvAnalysisOutput } from '@/ai/flows/clv-analyzer';
+import { generateBlogPost as generateBlogPostFlow, type GenerateBlogPostInput, type GenerateBlogPostOutput } from '@/ai/flows/blog-post-generator';
+import { chatWithD2cExpert, type ChatInput } from '@/ai/flows/d2c-expert-chat';
 import { z } from 'zod';
 
 export async function getRtoLossAnalysis(input: AnalyzeRtoLossInput): Promise<AnalyzeRtoLossOutput> {
@@ -69,6 +71,25 @@ export async function getClvAnalysis(input: ClvAnalysisInput): Promise<ClvAnalys
     }
 }
 
+export async function generateBlogPost(input: GenerateBlogPostInput): Promise<GenerateBlogPostOutput> {
+  try {
+    const result = await generateBlogPostFlow(input);
+    return result;
+  } catch (error) {
+    console.error("Error in Blog Post Generation:", error);
+    throw new Error("Failed to get analysis from AI. Please try again later.");
+  }
+}
+
+export async function getChatbotResponse(input: ChatInput): Promise<string> {
+    try {
+        const result = await chatWithD2cExpert(input);
+        return result;
+    } catch (error) {
+        console.error("Error in Chatbot:", error);
+        return "Sorry, I encountered an error and couldn't process your request. Please try again.";
+    }
+}
 
 const emailSchema = z.string().email({ message: "Please enter a valid email address." });
 
