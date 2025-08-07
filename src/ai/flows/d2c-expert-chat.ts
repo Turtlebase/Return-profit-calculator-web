@@ -26,6 +26,7 @@ const ChatInputSchema = z.object({
 });
 export type ChatInput = z.infer<typeof ChatInputSchema>;
 
+const model = googleAI('gemini-2.0-flash');
 
 export async function chatWithD2cExpert(input: ChatInput): Promise<string> {
     const systemPrompt = `You are a world-class D2C e-commerce strategist from India, acting as a helpful AI assistant named 'ProfitPilot'. Your expertise covers profitability, marketing, RTO reduction, logistics, and all facets of running a successful online brand in the Indian market.
@@ -47,8 +48,6 @@ export async function chatWithD2cExpert(input: ChatInput): Promise<string> {
             content: [{ text: msg.content }],
         }))
     ];
-
-    const model = googleAI('gemini-2.0-flash');
 
     const { text } = await generate({
         model: model,
