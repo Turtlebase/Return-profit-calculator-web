@@ -17,33 +17,9 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    let foundPost = staticBlogPosts.find((p) => p.slug === params.slug);
-    
-    if (!foundPost) {
-      const newPostJson = sessionStorage.getItem('newBlogPostForFeed');
-      if (newPostJson) {
-        try {
-          const sessionPost = JSON.parse(newPostJson);
-          if (sessionPost.slug === params.slug) {
-            foundPost = sessionPost;
-          }
-        } catch (error) {
-          console.error("Failed to parse blog post from session storage", error);
-        }
-      }
-    }
-
+    const foundPost = staticBlogPosts.find((p) => p.slug === params.slug);
     setPost(foundPost || null);
     setIsLoading(false);
-
-    // Clean up the 'newBlogPost' key after viewing it once
-    if (foundPost) {
-        const newPostFlag = sessionStorage.getItem('newBlogPost');
-        if(newPostFlag && JSON.parse(newPostFlag)?.slug === params.slug) {
-            sessionStorage.removeItem('newBlogPost');
-        }
-    }
-
   }, [params.slug]);
 
   useEffect(() => {

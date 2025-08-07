@@ -3,7 +3,6 @@
 
 import { analyzeRtoLoss, type AnalyzeRtoLossInput, type AnalyzeRtoLossOutput } from '@/ai/flows/rto-loss-analyzer';
 import { evaluateCodRisk, type CodRiskInput, type CodRiskOutput } from '@/ai/flows/cod-risk-evaluator';
-import { generateBlogPost as generateBlogPostFlow, type GenerateBlogPostInput, type GenerateBlogPostOutput } from '@/ai/flows/blog-post-generator';
 import { z } from 'zod';
 
 export async function getRtoLossAnalysis(input: AnalyzeRtoLossInput): Promise<AnalyzeRtoLossOutput> {
@@ -70,15 +69,4 @@ export async function subscribeToNewsletter(email: string): Promise<{ success: b
     console.error("Newsletter Subscription Error:", error);
     return { success: false, message: "An unexpected error occurred. Please try again." };
   }
-}
-
-
-export async function generateBlogPost(title: GenerateBlogPostInput): Promise<GenerateBlogPostOutput> {
-    try {
-        const result = await generateBlogPostFlow(title);
-        return result;
-    } catch (error) {
-        console.error("Error in Blog Post Generation:", error);
-        throw new Error("Failed to generate the blog post from AI. Please try a different title.");
-    }
 }

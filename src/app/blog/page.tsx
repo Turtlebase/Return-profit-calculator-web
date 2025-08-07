@@ -1,56 +1,12 @@
 
 'use client';
 
-import { useEffect, useState } from 'react';
-import { BlogCard } from '@/components/blog/blog-card';
-import { blogPosts as initialBlogPosts, type BlogPost } from '@/lib/blog-data';
+import { blogPosts, type BlogPost } from '@/lib/blog-data';
 import Footer from '@/components/layout/footer';
 import Header from '@/components/layout/header';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { Sparkles } from 'lucide-react';
+import { BlogCard } from '@/components/blog/blog-card';
 
 export default function BlogPage() {
-  const [allPosts, setAllPosts] = useState<BlogPost[]>(() => {
-    const posts = [...initialBlogPosts];
-    if (typeof window !== 'undefined') {
-        const newPostJson = sessionStorage.getItem('newBlogPostForFeed');
-        if (newPostJson) {
-            try {
-                const post = JSON.parse(newPostJson);
-                if (!posts.some(p => p.slug === post.slug)) {
-                    posts.unshift(post);
-                }
-            } catch (error) {
-                console.error("Failed to parse new blog post from session storage", error);
-            }
-        }
-    }
-    return posts;
-  });
-
-  const [newPostAlert, setNewPostAlert] = useState<BlogPost | null>(null);
-
-  useEffect(() => {
-    // This effect handles showing the alert after navigation
-    const newPostJson = sessionStorage.getItem('newBlogPost');
-    if (newPostJson) {
-      try {
-        const post = JSON.parse(newPostJson);
-        setNewPostAlert(post);
-        // Add the post to the main list if it's not already there
-        setAllPosts(prevPosts => {
-          if (!prevPosts.some(p => p.slug === post.slug)) {
-            sessionStorage.setItem('newBlogPostForFeed', JSON.stringify(post));
-            return [post, ...prevPosts];
-          }
-          return prevPosts;
-        });
-        sessionStorage.removeItem('newBlogPost');
-      } catch (error) {
-        console.error("Failed to parse new blog post from session storage", error);
-      }
-    }
-  }, []);
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
@@ -68,18 +24,8 @@ export default function BlogPage() {
               </p>
             </div>
             
-            {newPostAlert && (
-              <Alert className="mb-8 max-w-4xl mx-auto bg-primary/10 border-primary/20 animate-in fade-in-50">
-                <Sparkles className="h-4 w-4 text-primary" />
-                <AlertTitle className="text-primary">New Post Published!</AlertTitle>
-                <AlertDescription>
-                  Your AI-generated article "{newPostAlert.title}" is now live.
-                </AlertDescription>
-              </Alert>
-            )}
-
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {allPosts.map((post) => (
+              {blogPosts.map((post) => (
                 <BlogCard key={post.slug} post={post} />
               ))}
             </div>
