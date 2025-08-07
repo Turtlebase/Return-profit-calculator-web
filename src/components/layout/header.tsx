@@ -1,9 +1,8 @@
 
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
-import { Menu, BotMessageSquare, Wrench, Info, BookText, Shield, ChevronDown, Contact, FileText, Lock } from "lucide-react";
+import { Menu, BotMessageSquare, Wrench, Info, BookText, Home as HomeIcon, ChevronDown, Contact, FileText, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetClose } from "@/components/ui/sheet";
 import {
@@ -16,6 +15,7 @@ import {
 
 export default function Header() {
   const mainNavLinks = [
+    { name: "Home", href: "/", icon: HomeIcon },
     { name: "Tools", href: "/#tools", icon: Wrench },
     { name: "Blog", href: "/blog", icon: BookText },
   ];
@@ -27,7 +27,7 @@ export default function Header() {
     { name: "Terms of Use", href: "/terms", icon: FileText },
   ]
 
-  const mobileNavLinks = [...mainNavLinks, ...infoNavLinks, { name: "Admin", href: "/admin", icon: Shield }];
+  const mobileNavLinks = [...mainNavLinks, ...infoNavLinks];
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur-sm supports-[backdrop-filter]:bg-background/60">
@@ -65,9 +65,6 @@ export default function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
-            <Button asChild variant="ghost" className="hidden md:inline-flex">
-               <Link href="/admin">Admin</Link>
-            </Button>
             <div className="md:hidden">
             <Sheet>
                 <SheetTrigger asChild>
@@ -76,7 +73,7 @@ export default function Header() {
                     <span className="sr-only">Open menu</span>
                 </Button>
                 </SheetTrigger>
-                <SheetContent side="right" className="w-[240px]">
+                <SheetContent side="right" className="w-[240px] p-0">
                 <SheetTitle className="sr-only">Mobile Menu</SheetTitle>
                  <div className="flex flex-col h-full">
                     <div className="flex items-center p-4 border-b">
@@ -90,7 +87,7 @@ export default function Header() {
                          <SheetClose asChild key={link.name}>
                             <Link
                               href={link.href}
-                              className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+                              className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary hover:bg-primary/10"
                             >
                               <link.icon className="h-4 w-4" />
                               {link.name}
