@@ -40,19 +40,27 @@ export default function Chatbot() {
     e.preventDefault();
     if (!input.trim() || isLoading) return;
 
-    const userMessage: ChatMessage = { role: 'user', content: input };
-    setMessages(prev => [...prev, userMessage]);
+    const currentInput = input;
+    const newMessages: ChatMessage[] = [...messages, { role: 'user', content: currentInput }];
+    setMessages(newMessages);
     setInput('');
     setIsLoading(true);
 
-    const response = await getChatbotResponse({
-      history: [...messages],
-      query: input,
-    });
+    try {
+        const response = await getChatbotResponse({
+          history: messages, // Send the history *before* the new user message
+          query: currentInput,
+        });
+        
+        const modelMessage: ChatMessage = { role: 'model', content: response };
+        setMessages(prev => [...prev, { role: 'user', content: currentInput }, modelMessage]);
 
-    const modelMessage: ChatMessage = { role: 'model', content: response };
-    setMessages(prev => [...prev, modelMessage]);
-    setIsLoading(false);
+    } catch (error) {
+        const errorMessage: ChatMessage = { role: 'model', content: "Sorry, I'm having trouble connecting right now. Please try again in a moment." };
+         setMessages(prev => [...prev, { role: 'user', content: currentInput }, errorMessage]);
+    } finally {
+        setIsLoading(false);
+    }
   };
 
   return (
@@ -92,7 +100,7 @@ export default function Chatbot() {
                                         </Avatar>
                                     )}
                                     <div className={cn("max-w-[80%] rounded-2xl p-3 text-sm", message.role === 'user' ? 'bg-primary text-primary-foreground rounded-br-none' : 'bg-secondary rounded-bl-none')}>
-                                        {message.content}
+                                        {message.content.split('\n').map((line, i) => <p key={i}>{line}</p>)}
                                     </div>
                                      {message.role === 'user' && (
                                         <Avatar className="w-8 h-8">
