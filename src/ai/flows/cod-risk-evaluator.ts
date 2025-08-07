@@ -10,6 +10,7 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
+import { generate } from 'genkit';
 
 const CodRiskInputSchema = z.object({
   orderValue: z.number().describe('The total value of the order.'),
@@ -83,11 +84,26 @@ const evaluateCodRiskFlow = ai.defineFlow(
     inputSchema: CodRiskInputSchema,
     outputSchema: CodRiskOutputSchema,
   },
-  async input => {
-    const {output} = await prompt(input);
-    if (!output) {
-      throw new Error('The model did not return an output.');
+  async (input) => {
+    let attempts = 0;
+    const maxAttempts = 3;
+
+    while (attempts < maxAttempts) {
+      try {
+        const { output } = await prompt(input);
+        if (output) {
+          // Validate the output against the schema
+          const validation = CodRiskOutputSchema.safeParse(output);
+          if (validation.success) {
+            return validation.data;
+          }
+        }
+      } catch (e) {
+        console.error(`Attempt ${attempts + 1} failed:`, e);
+      }
+      attempts++;
     }
-    return output;
+    
+    throw new Error("The AI model failed to provide a valid risk evaluation after multiple attempts. Please try again later.");
   }
 );
