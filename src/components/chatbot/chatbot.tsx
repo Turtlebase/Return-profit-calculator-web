@@ -41,23 +41,28 @@ export default function Chatbot() {
     if (!input.trim() || isLoading) return;
 
     const currentInput = input;
-    const newMessages: ChatMessage[] = [...messages, { role: 'user', content: currentInput }];
-    setMessages(newMessages);
+    const previousMessages = messages;
+
+    // Immediately update the UI with the user's message.
+    setMessages(prev => [...prev, { role: 'user', content: currentInput }]);
     setInput('');
     setIsLoading(true);
 
     try {
+        // Pass the correct, up-to-date history to the AI.
         const response = await getChatbotResponse({
-          history: messages, // Send the history *before* the new user message
+          history: previousMessages,
           query: currentInput,
         });
         
         const modelMessage: ChatMessage = { role: 'model', content: response };
-        setMessages(prev => [...prev, { role: 'user', content: currentInput }, modelMessage]);
+        // Update the UI with the model's response.
+        setMessages(prev => [...prev, modelMessage]);
 
     } catch (error) {
         const errorMessage: ChatMessage = { role: 'model', content: "Sorry, I'm having trouble connecting right now. Please try again in a moment." };
-         setMessages(prev => [...prev, { role: 'user', content: currentInput }, errorMessage]);
+        // Update the UI with an error message.
+         setMessages(prev => [...prev, errorMessage]);
     } finally {
         setIsLoading(false);
     }
