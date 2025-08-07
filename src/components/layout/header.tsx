@@ -39,7 +39,11 @@ export default function Header() {
       <div className="container flex h-16 items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
           <Image src="/logo.png" alt="Returnprofit.online Logo" width={32} height={32} />
-          <span className="text-xl font-bold">Returnprofit.online</span>
+          <span className="text-xl font-bold">
+            <span className="text-primary">Return</span>
+            <span className="text-accent">profit</span>
+            <span className="text-foreground">.online</span>
+          </span>
         </Link>
 
         <nav className="hidden md:flex items-center gap-1">
@@ -87,7 +91,11 @@ export default function Header() {
                     <div className="flex items-center p-4 border-b">
                        <Link href="/" className="flex items-center gap-2">
                            <Image src="/logo.png" alt="Returnprofit.online Logo" width={24} height={24} />
-                          <span className="font-bold">Returnprofit.online</span>
+                           <span className="font-bold">
+                            <span className="text-primary">Return</span>
+                            <span className="text-accent">profit</span>
+                            <span className="text-foreground">.online</span>
+                           </span>
                        </Link>
                     </div>
                     <nav className="flex flex-col gap-1 p-4">

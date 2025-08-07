@@ -22,7 +22,11 @@ export default function Footer() {
             <div className="lg:col-span-1 space-y-4">
                 <Link href="/" className="flex items-center gap-2">
                   <Image src="/logo.png" alt="Returnprofit.online Logo" width={32} height={32} />
-                  <span className="text-xl font-bold">Returnprofit.online</span>
+                  <span className="text-xl font-bold">
+                    <span className="text-primary">Return</span>
+                    <span className="text-accent">profit</span>
+                    <span className="text-foreground">.online</span>
+                  </span>
                 </Link>
                 <p className="text-sm text-muted-foreground max-w-xs">
                     AI-powered tools & calculators for Direct-to-Consumer entrepreneurs to maximize profits and minimize losses.
