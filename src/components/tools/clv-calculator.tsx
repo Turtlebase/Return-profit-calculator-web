@@ -87,13 +87,13 @@ export function CLVCalculator() {
                          <div className="flex flex-col justify-between items-center p-4 rounded-lg bg-background text-center">
                             <span className="text-muted-foreground mb-1">Estimated CLV</span>
                             <span className="font-bold text-4xl text-primary">
-                              ₹{clv.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}
+                              ₹{clv.toLocaleString('en-IN', { maximumFractionDigits: 2, minimumFractionDigits: 2 })}
                             </span>
                         </div>
                         <div className="flex justify-between items-center p-3 rounded-lg bg-background">
                             <span className="text-muted-foreground">Annual Customer Value</span>
                             <span className="font-bold text-lg">
-                               ₹{customerValue.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}
+                               ₹{customerValue.toLocaleString('en-IN', { maximumFractionDigits: 2, minimumFractionDigits: 2 })}
                             </span>
                         </div>
                         <p className="text-xs text-muted-foreground text-center pt-2">

@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from "react";
@@ -127,7 +128,7 @@ export function RTOLossAnalyzer() {
             </CardHeader>
             <CardContent>
               <p className="text-4xl font-bold text-center">
-                ${result.predictedRtoLoss.toLocaleString()}
+                ₹{result.predictedRtoLoss.toLocaleString('en-IN')}
               </p>
             </CardContent>
           </Card>

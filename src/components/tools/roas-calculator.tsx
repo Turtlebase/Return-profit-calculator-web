@@ -89,7 +89,7 @@ export function ROASCalculator() {
             <div className="flex justify-between items-center p-3 rounded-lg bg-background">
                 <span className="text-muted-foreground">Net Profit</span>
                 <span className={`font-bold text-lg ${profit >= 0 ? 'text-green-500' : 'text-destructive'}`}>
-                ₹{profit.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}
+                ₹{profit.toLocaleString('en-IN', { maximumFractionDigits: 2, minimumFractionDigits: 2 })}
                 </span>
             </div>
             </CardContent>

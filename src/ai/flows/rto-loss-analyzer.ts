@@ -1,3 +1,4 @@
+
 'use server';
 
 /**
@@ -15,7 +16,7 @@ const AnalyzeRtoLossInputSchema = z.object({
   historicalData: z
     .string()
     .describe(
-      'Historical sales and returns data, including order details, customer information, and return reasons. This will be provided as a string, likely from a CSV file.'
+      'Historical sales and returns data, including order details, customer information, and return reasons. This will be provided as a string, likely from a CSV file. Monetary values are in Indian Rupees (₹).'
     ),
   marketConditions: z
     .string()
@@ -26,7 +27,7 @@ const AnalyzeRtoLossInputSchema = z.object({
 export type AnalyzeRtoLossInput = z.infer<typeof AnalyzeRtoLossInputSchema>;
 
 const AnalyzeRtoLossOutputSchema = z.object({
-  predictedRtoLoss: z.number().describe('The predicted RTO loss amount.'),
+  predictedRtoLoss: z.number().describe('The predicted RTO loss amount in Indian Rupees (₹).'),
   riskFactors: z
     .array(z.string())
     .describe('List of key risk factors contributing to RTO loss.'),
@@ -44,16 +45,16 @@ const prompt = ai.definePrompt({
   name: 'analyzeRtoLossPrompt',
   input: {schema: AnalyzeRtoLossInputSchema},
   output: {schema: AnalyzeRtoLossOutputSchema},
-  prompt: `You are an expert in analyzing RTO (Return to Origin) loss for D2C e-commerce businesses.
+  prompt: `You are an expert in analyzing RTO (Return to Origin) loss for D2C e-commerce businesses in India.
 
-  Analyze the provided historical data and market conditions to predict potential RTO loss, identify key risk factors, and recommend strategies to mitigate the loss. The historical data is provided as a string, likely from a CSV file.
+  Analyze the provided historical data and market conditions to predict potential RTO loss, identify key risk factors, and recommend strategies to mitigate the loss. The historical data is provided as a string, likely from a CSV file. All monetary values are in Indian Rupees (₹).
 
   Historical Data: {{{historicalData}}}
   Market Conditions: {{{marketConditions}}}
 
-  Based on the data and conditions, predict the RTO loss amount, list the contributing risk factors, and suggest actionable recommendations.
+  Based on the data and conditions, predict the RTO loss amount in Indian Rupees (₹), list the contributing risk factors, and suggest actionable recommendations.
   Output the result in JSON format.
-  Follow the schema provided.
+  Follow the schema provided. The predictedRtoLoss value should be a number only.
   `,
 });
 

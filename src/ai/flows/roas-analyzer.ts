@@ -13,18 +13,18 @@ import { ai } from '@/ai/genkit';
 import { z } from 'zod';
 
 const RoasAnalysisInputSchema = z.object({
-  adSpend: z.number().describe('The total amount spent on advertising.'),
-  revenue: z.number().describe('The total revenue generated from that ad spend.'),
+  adSpend: z.number().describe('The total amount spent on advertising in Indian Rupees (₹).'),
+  revenue: z.number().describe('The total revenue generated from that ad spend in Indian Rupees (₹).'),
   cogsPercent: z.number().describe('The Cost of Goods Sold as a percentage of revenue.'),
   roas: z.number().describe('The calculated ROAS (Revenue / Ad Spend).'),
-  netProfit: z.number().describe('The calculated net profit from the campaign.'),
+  netProfit: z.number().describe('The calculated net profit from the campaign in Indian Rupees (₹).'),
   breakEvenRoas: z.number().describe('The calculated break-even ROAS.'),
 });
 export type RoasAnalysisInput = z.infer<typeof RoasAnalysisInputSchema>;
 
 const RoasAnalysisOutputSchema = z.object({
   headline: z.string().describe('A single, powerful headline summarizing the key insight from the ROAS analysis.'),
-  analysis: z.string().describe('A detailed analysis of the ad campaign\'s profitability, written in HTML format. Explain what the numbers mean. Compare the actual ROAS to the break-even ROAS. Use <p>, <ul>, <li>, and <strong> tags.'),
+  analysis: z.string().describe('A detailed analysis of the ad campaign\'s profitability, written in HTML format. Explain what the numbers mean. Compare the actual ROAS to the break-even ROAS. Use <p>, <ul>, <li>, and <strong> tags. All monetary values must be in Indian Rupees (₹).'),
   recommendations: z.array(z.string()).describe('A list of 2-3 actionable, expert recommendations to improve the ad campaign\'s profitability.'),
 });
 export type RoasAnalysisOutput = z.infer<typeof RoasAnalysisOutputSchema>;
@@ -40,12 +40,12 @@ const prompt = ai.definePrompt({
   output: { schema: RoasAnalysisOutputSchema },
   prompt: `You are a world-class D2C e-commerce performance marketing expert. You live and breathe acronyms like ROAS, CPA, and LTV. You can glance at a campaign's numbers and immediately diagnose its health.
 
-You are analyzing the following ad campaign data:
-- Ad Spend: {{{adSpend}}}
-- Revenue Generated: {{{revenue}}}
+You are analyzing the following ad campaign data. All monetary values are in Indian Rupees (₹).
+- Ad Spend: ₹{{{adSpend}}}
+- Revenue Generated: ₹{{{revenue}}}
 - COGS: {{{cogsPercent}}}%
 - **Calculated ROAS:** {{{roas}}}x
-- **Net Profit:** {{{netProfit}}}
+- **Net Profit:** ₹{{{netProfit}}}
 - **Break-Even ROAS:** {{{breakEvenRoas}}}x
 
 Your task is to provide an expert analysis for the D2C founder.
@@ -55,7 +55,7 @@ Your task is to provide an expert analysis for the D2C founder.
 2.  **Write a Detailed Analysis:** In HTML format, break down the numbers. The most important thing is to compare the actual ROAS to the Break-Even ROAS. Are they profitable? By how much? Is the profit margin healthy enough to justify the ad spend? Use HTML tags for structure.
 3.  **Provide Actionable Recommendations:** Give 2-3 specific, high-impact recommendations. Should they scale the ad spend? Should they try to improve the ad creative to boost revenue? Or should they work on their landing page conversion rate? Be precise and tactical.
 
-Output the result in a single JSON object that strictly adheres to the provided output schema. Do not include any other text or formatting.`,
+Output the result in a single JSON object that strictly adheres to the provided output schema. All monetary values in your output must be prefixed with the '₹' symbol. Do not include any other text or formatting.`,
 });
 
 const analyzeRoasFlow = ai.defineFlow(
