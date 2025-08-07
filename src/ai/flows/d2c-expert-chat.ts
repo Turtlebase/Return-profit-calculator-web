@@ -12,6 +12,7 @@ import { ai } from '@/ai/genkit';
 import { z } from 'zod';
 import { generate } from 'genkit';
 import { googleAI } from '@genkit-ai/googleai';
+import { Content } from 'genkit/content';
 
 const ChatMessageSchema = z.object({
   role: z.enum(['user', 'model']),
@@ -38,9 +39,9 @@ export async function chatWithD2cExpert(input: ChatInput): Promise<string> {
         When responding, do not use markdown. Respond in plain text.
         `;
 
-    const history = [
-        { role: 'user' as const, content: [{ text: systemPrompt }] },
-        { role: 'model' as const, content: [{ text: "Understood. I am ProfitPilot, your expert D2C assistant, ready to help." }] },
+    const history: Content[] = [
+        { role: 'user', content: [{ text: systemPrompt }] },
+        { role: 'model', content: [{ text: "Understood. I am ProfitPilot, your expert D2C assistant, ready to help." }] },
         ...input.history.map((msg) => ({
             role: msg.role as 'user' | 'model',
             content: [{ text: msg.content }],

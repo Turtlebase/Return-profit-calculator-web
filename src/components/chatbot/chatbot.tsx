@@ -24,6 +24,7 @@ export default function Chatbot() {
 
   const scrollToBottom = () => {
     if (scrollAreaRef.current) {
+        // Correctly target the viewport element within the ScrollArea component
         const scrollableView = scrollAreaRef.current.querySelector('div[data-radix-scroll-area-viewport]');
         if (scrollableView) {
            scrollableView.scrollTo({ top: scrollableView.scrollHeight, behavior: 'smooth' });
@@ -32,6 +33,7 @@ export default function Chatbot() {
   };
 
   useEffect(() => {
+    // Scroll to bottom whenever messages update
     scrollToBottom();
   }, [messages]);
 
@@ -40,9 +42,9 @@ export default function Chatbot() {
     e.preventDefault();
     if (!input.trim() || isLoading) return;
 
-    const userInput: ChatMessage = { role: 'user', content: input };
-    const newMessages: ChatMessage[] = [...messages, userInput];
-    
+    const userMessage: ChatMessage = { role: 'user', content: input };
+    const newMessages = [...messages, userMessage];
+
     setMessages(newMessages);
     setInput('');
     setIsLoading(true);
